@@ -1,5 +1,3 @@
-
-
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -109,7 +107,7 @@ export default StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   drawerProfile: {
-    marginTop: 20, 
+    marginTop: 20,
   },
   drawerName: {
     fontSize: 20,
@@ -130,5 +128,24 @@ export default StyleSheet.create({
     marginLeft: 8,
     color: '#FD3F3F',
     fontSize: 16,
+  },
+
+  // ✅ Newly added styles
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+    paddingHorizontal: 20,
+  },
+  image: {
+    width: 280,
+    height: 220,
+    marginBottom: 20,
+  },
+  placeholderText: {
+    fontSize: 16,
+    color: '#4433CC',
+    fontStyle: 'italic',
   },
 });

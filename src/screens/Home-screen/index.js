@@ -1,68 +1,75 @@
-import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Image,
+  ImageBackground,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
-// ✅ Correct way:
 import UserGeneral from '../UserGeneral-screen';
 
- // Make sure this is NOT './index'
-
-
-const users = [
+// Sample user data
+const allUsers = [
   { name: 'Corey Kenter', phone: '6235689451' },
   { name: 'Corey Siphron', phone: '6235689451' },
   { name: 'Angel Lipshutz', phone: '6235689451' },
   { name: 'Emerson Ekstrom Bothman', phone: '6235689451' },
 ];
 
-const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
-
-// ✅ Home Screen
 const HomeScreen = ({ navigation }) => {
-  return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Home</Text>
-        <TouchableOpacity
-          style={styles.menuIcon}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Ionicons name="menu" size={28} color="white" />
-        </TouchableOpacity>
-        <View style={styles.userCard}>
-          <Text style={styles.userName}>Ajay kumar</Text>
-          <Text style={styles.userRole}>L.C.O</Text>
-        </View>
-      </View>
-         
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Ionicons
-          name="search"
-          size={18}
-          color="#888"
-          style={styles.searchIcon}
-        />
-        <TextInput
-          placeholder="Search"
-          placeholderTextColor="#888"
-          style={styles.searchInput}
-        />
-      </View>
+  const [searchText, setSearchText] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
-      {/* User List */}
+  const handleSearch = (text) => {
+    setSearchText(text);
+    if (text.trim() === '') {
+      setFilteredUsers([]);
+      return;
+    }
+
+    const filtered = allUsers.filter((user) =>
+      user.name.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredUsers(filtered);
+  };
+
+  const renderContent = () => {
+    if (searchText === '') {
+      // Case 1: Default state
+      return (
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../../assets/search-default.png')} // your first image
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <Text style={styles.placeholderText}>Search for Data</Text>
+        </View>
+      );
+    }
+
+    if (filteredUsers.length === 0) {
+      // Case 3: No results
+      return (
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../../assets/search-no-data.png')} // your third image
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <Text style={styles.placeholderText}>Data not found</Text>
+        </View>
+      );
+    }
+
+    // Case 2: Results found
+    return (
       <View style={styles.listContainer}>
-        {users.map((user, index) => (
+        {filteredUsers.map((user, index) => (
           <TouchableOpacity
             key={index}
             style={styles.userItem}
@@ -73,48 +80,48 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </View>
-    </ScrollView>
-  );
-};
+    );
+  };
 
-// ✅ Drawer content (logout section)
-const DrawerContent = ({ navigation }) => {
   return (
-    <View style={styles.drawerContainer}>
-      <View style={styles.drawerProfile}>
-        <Text style={styles.drawerName}>Ajay kumar</Text>
-        <Text style={styles.drawerRole}>L.C.O</Text>
-      </View>
+    // <ImageBackground
+    //   source={require('../../assets/your-background.png')} // Replace with your background
+    //   style={styles.container}
+    //   resizeMode="cover"
+    // >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Home</Text>
+          <TouchableOpacity
+            style={styles.menuIcon}
+            onPress={() => navigation.openDrawer()}
+          >
+            <Ionicons name="menu" size={28} color="white" />
+          </TouchableOpacity>
+          <View style={styles.userCard}>
+            <Text style={styles.userName}>Ajay kumar</Text>
+            <Text style={styles.userRole}>L.C.O</Text>
+          </View>
+        </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('LoginScreen')}
-        style={styles.logoutContainer}
-      >
-        <Ionicons name="log-out-outline" size={20} color="#f00" />
-        <Text style={styles.logoutText}>Log out</Text>
-      </TouchableOpacity>
-    </View>
+        {/* Search bar */}
+        <View style={styles.searchContainer}>
+          <Ionicons name="search" size={18} color="#888" style={styles.searchIcon} />
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="#888"
+            style={styles.searchInput}
+            value={searchText}
+            onChangeText={handleSearch}
+          />
+        </View>
+
+        {/* Render dynamic content */}
+        {renderContent()}
+      </ScrollView>
+    // </ImageBackground>
   );
 };
 
-// ✅ Stack containing Home and UserGeneral
-const MainStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="UserGeneral" component={UserGeneral} />
-  </Stack.Navigator>
-);
-
-// ✅ Drawer wraps the MainStack
-const RootNavigator = () => {
-  return (
-    <Drawer.Navigator
-      screenOptions={{ headerShown: false }}
-      drawerContent={(props) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen name="MainStack" component={MainStack} />
-    </Drawer.Navigator>
-  );
-};
-
-export default RootNavigator;
+export default HomeScreen;
