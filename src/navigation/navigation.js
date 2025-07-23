@@ -11,6 +11,7 @@ import SetNewPasswordScreen from '../screens/SetNewPassword-screen';
 import UserNetwork from '../screens/User-Network-screen';
 import UserGeneral from '../screens/UserGeneral-screen';
 import UserHeader from '../components/UserHeader';
+import UserISP from '../screens/User-ISP-screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function Navigation() {
         <Stack.Screen name="UserNetwork" component={UserNetwork} />
         <Stack.Screen name="UserGeneral" component={UserGeneral} />
         <Stack.Screen name="UserHeader" component={UserHeader} />
+        <Stack.Screen name="UserISP" component={UserISP} />
         
 
       </Stack.Navigator>
