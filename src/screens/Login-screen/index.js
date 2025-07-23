@@ -8,16 +8,47 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/Ionicons";
+import { loginUser } from "../../services/loginService"; // 👈 Add this
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Validation Error", "Please enter email and password");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const data = await loginUser(email, password);
+
+      // Save tokens if needed (Optional — your axios already handles it in web)
+      // await AsyncStorage.setItem('token', data.access);
+      // await AsyncStorage.setItem('refreshToken', data.refresh);
+
+      Alert.alert("Login Success", `Welcome, ${data.user?.name || "User"}!`);
+      navigation.navigate("HomeScreen");
+    } catch (error) {
+      const message =
+        error.response?.data?.detail ||
+        error.message ||
+        "Something went wrong. Try again!";
+      Alert.alert("Login Failed", message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -36,7 +67,6 @@ export default function LoginScreen() {
         <View style={styles.form}>
           <Text style={styles.title}>Log in</Text>
 
-          {/* Email Field */}
           <View style={styles.inputWrapper}>
             <Text style={styles.floatingLabel}>Email</Text>
             <TextInput
@@ -44,12 +74,12 @@ export default function LoginScreen() {
               placeholder="Enter Email"
               placeholderTextColor="#aaa"
               keyboardType="email-address"
+              autoCapitalize="none"
               value={email}
               onChangeText={setEmail}
             />
           </View>
 
-          {/* Password Field */}
           <View style={styles.inputWrapper}>
             <Text style={styles.floatingLabel}>Password</Text>
             <View>
@@ -74,15 +104,14 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          {/* Login Button */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("HomeScreen")}
-          >
-            <Text style={styles.buttonText}>Log in</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Log in</Text>
+            )}
           </TouchableOpacity>
 
-          {/* Reset Link */}
           <TouchableOpacity onPress={() => navigation.navigate("ForgotPasswordScreen")}>
             <Text style={styles.reset}>Re-set password</Text>
           </TouchableOpacity>
