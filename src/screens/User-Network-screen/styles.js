@@ -1,56 +1,77 @@
-import { StyleSheet, Dimensions } from 'react-native';
+// import { StyleSheet, Dimensions, Platform } from 'react-native';
 
-const { width } = Dimensions.get('window');
+// const { width } = Dimensions.get('window');
+
+// export default StyleSheet.create({
+//   container: {
+//     padding: 16,
+//     backgroundColor: '#fff',
+//     paddingBottom: 32,
+//   },
+//   tabs: {
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     marginBottom: 20,
+//     marginTop: 10,
+//   },
+//   tabButton: {
+//     borderWidth: 1,
+//     borderColor: '#6B00F5',
+//     paddingVertical: 8,
+//     paddingHorizontal: 20,
+//     borderTopLeftRadius: 4,
+//     borderTopRightRadius: 4,
+//     marginHorizontal: 4,
+//     backgroundColor: '#fff',
+//   },
+//   activeTab: {
+//     backgroundColor: '#6B00F5',
+//   },
+//   tabText: {
+//     color: '#6B00F5',
+//     fontWeight: '500',
+//     fontSize: 14,
+//   },
+//   activeTabText: {
+//     color: '#fff',
+//   },
+//   form: {
+//     marginTop: 10,
+//   },
+//   label: {
+//     color: '#000',
+//     fontSize: 14,
+//     marginBottom: 4,
+//     marginLeft: 4,
+//   },
+//   input: {
+//     backgroundColor: '#EDEDED',
+//     borderRadius: 10,
+//     paddingHorizontal: 12,
+//     paddingVertical: Platform.OS === 'ios' ? 12 : 8,
+//     fontSize: 14,
+//     marginBottom: 16,
+//     color: '#000',
+//   },
+// });
+
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    padding: 16,
-    paddingBottom: 32,
+  safeArea: {
+    flex: 1,
     backgroundColor: '#fff',
-  },
-  backButton: {
-    marginTop: 40,
-    marginBottom: 10,
-  },
-  headerCard: {
-    backgroundColor: '#6B00F5',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    padding: 20,
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 4 },
-    marginBottom: 16,
-  },
-  userName: {
-    fontSize: 18,
-    color: '#fff',
-    fontWeight: '600',
-  },
-  userPhone: {
-    fontSize: 14,
-    color: '#fff',
-    marginTop: 4,
-  },
-  updatedDate: {
-    fontSize: 12,
-    color: '#fff',
-    position: 'absolute',
-    bottom: 10,
-    right: 16,
-    textAlign: 'right',
   },
   tabs: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginTop: 8,
+    marginBottom: 12,
   },
   tabButton: {
     borderWidth: 1,
     borderColor: '#6B00F5',
-    paddingVertical: 6,
+    paddingVertical: 8,
     paddingHorizontal: 20,
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
@@ -61,28 +82,45 @@ export default StyleSheet.create({
     backgroundColor: '#6B00F5',
   },
   tabText: {
-    color: '#6B00F5',
+    fontSize: 14,
     fontWeight: '500',
+    color: '#6B00F5',
   },
   activeTabText: {
     color: '#fff',
   },
-  form: {
-    marginTop: 10,
+  scrollForm: {
+    paddingHorizontal: 16,
+    paddingBottom: 32,
   },
+
+  scrollContent: {
+    flex: 1,
+    paddingTop: 340, // Adjust to match actual header height
+  },
+
+  formContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 30,
+  },
+
   label: {
-    color: '#666',
     fontSize: 14,
+    color: '#000',
     marginBottom: 4,
     marginLeft: 4,
   },
   input: {
-    backgroundColor: '#F2EFFF',
+    backgroundColor: '#EDEDED',
     borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: Platform.OS === 'ios' ? 12 : 8,
     fontSize: 14,
     marginBottom: 16,
     color: '#000',
+  },
+  multilineInput: {
+    height: 100,
+    textAlignVertical: 'top',
   },
 });
