@@ -11,7 +11,6 @@ export default StyleSheet.create({
     marginTop: 8,
     marginBottom: 16,
   },
-  
   activeTab: {
     backgroundColor: '#6BBAE8',
   },
@@ -23,21 +22,12 @@ export default StyleSheet.create({
   activeTabText: {
     color: '#000',
   },
+
   formContainer: {
     paddingHorizontal: 16,
     paddingBottom: 32,
+    paddingTop: 160, // <-- Important to avoid overlap
   },
-
-scrollContent: {
-    flex: 1,
-    paddingTop: 340, // Adjust to match actual header height
-  },
-
-  formContainer: {
-    paddingHorizontal: 16,
-    paddingBottom: 30,
-  },
-
 
   label: {
     fontSize: 14,
@@ -46,6 +36,7 @@ scrollContent: {
     marginBottom: 4,
     marginLeft: 4,
   },
+
   input: {
     backgroundColor: '#EDEDED',
     borderRadius: 10,

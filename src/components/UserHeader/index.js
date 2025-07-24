@@ -24,11 +24,11 @@ const UserHeader = ({ user }) => {
         </TouchableOpacity>
 
         <View style={styles.profileCard}>
-          <Text style={styles.profileName}>{user?.name || 'N/A'}</Text>
+          <Text style={styles.profileName}>{user?.full_name || 'N/A'}</Text>
           <Text style={styles.profilePhone}>Ph: {user?.phone || 'N/A'}</Text>
           <View style={styles.updatedWrapper}>
             <Text style={styles.updatedLabel}>Last Updated</Text>
-            <Text style={styles.updatedDate}>12-12-2025</Text>
+            <Text style={styles.updatedDate}>{user?.last_updated?.split('T')[0] || 'N/A'}</Text>
           </View>
         </View>
 
