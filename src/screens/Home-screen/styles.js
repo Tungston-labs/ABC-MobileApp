@@ -174,6 +174,21 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: '#303030',
   },
+
+headerTopRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingHorizontal: 10,
+  paddingTop: 35,
+},
+
+logo: {
+  width: 40, // Adjust size as needed
+  height: 40,
+},
+
+
   menuIcon: {
     position: 'absolute',
     top: Platform.OS === 'android' ? 45 : 60,

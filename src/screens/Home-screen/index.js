@@ -84,7 +84,7 @@
 //   };
 
 //   return (
-   
+
 //       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 //         {/* Header */}
 //         <View style={styles.header}>
@@ -116,12 +116,11 @@
 //         {/* Render dynamic content */}
 //         {renderContent()}
 //       </ScrollView>
-    
+
 //   );
 // };
 
 // export default HomeScreen;
-
 
 // import React, { useState } from 'react';
 // import {
@@ -320,9 +319,7 @@
 
 // export default RootNavigator;
 
-
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -330,18 +327,18 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import styles from './styles';
-import UserGeneral from '../UserGeneral-screen'; // ✅ Using your actual UserGeneral screen
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import styles from "./styles";
+import UserGeneral from "../UserGeneral-screen"; // ✅ Using your actual UserGeneral screen
 
 const allUsers = [
-  { name: 'Corey Kenter', phone: '6235689451' },
-  { name: 'Corey Siphron', phone: '6235689451' },
-  { name: 'Angel Lipshutz', phone: '6235689451' },
-  { name: 'Emerson Ekstrom Bothman', phone: '6235689451' },
+  { name: "Corey Kenter", phone: "6235689451" },
+  { name: "Corey Siphron", phone: "6235689451" },
+  { name: "Angel Lipshutz", phone: "6235689451" },
+  { name: "Emerson Ekstrom Bothman", phone: "6235689451" },
 ];
 
 const Drawer = createDrawerNavigator();
@@ -349,12 +346,12 @@ const Stack = createNativeStackNavigator();
 
 // ✅ Home Screen
 const HomeScreen = ({ navigation }) => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const handleSearch = (text) => {
     setSearchText(text);
-    if (text.trim() === '') {
+    if (text.trim() === "") {
       setFilteredUsers([]);
       return;
     }
@@ -366,11 +363,11 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const renderContent = () => {
-    if (searchText === '') {
+    if (searchText === "") {
       return (
         <View style={styles.imageContainer}>
           <Image
-            source={require('../../assets/search-default.png')}
+            source={require("../../assets/search-default.png")}
             style={styles.image}
             resizeMode="contain"
           />
@@ -383,7 +380,7 @@ const HomeScreen = ({ navigation }) => {
       return (
         <View style={styles.imageContainer}>
           <Image
-            source={require('../../assets/search-no-data.png')}
+            source={require("../../assets/search-no-data.png")}
             style={styles.image}
             resizeMode="contain"
           />
@@ -398,7 +395,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             key={index}
             style={styles.userItem}
-            onPress={() => navigation.navigate('UserGeneral')}
+            onPress={() => navigation.navigate("UserGeneral")}
           >
             <Text style={styles.userItemName}>{user.name}</Text>
             <Text style={styles.userItemPhone}>Ph: {user.phone}</Text>
@@ -412,15 +409,25 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.menuIcon}
-          onPress={() => {
-            const parentNav = navigation.getParent();
-            if (parentNav) parentNav.openDrawer();
-          }}
-        >
-          <Ionicons name="menu" size={28} color="#83B1C9" />
-        </TouchableOpacity>
+        {/* Logo at top left */}
+        <View style={styles.headerTopRow}>
+          <Image
+            source={require("../../assets/logo.png")} // ✅ Place your logo image here
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <TouchableOpacity
+            style={styles.menuIcon}
+            onPress={() => {
+              const parentNav = navigation.getParent();
+              if (parentNav) parentNav.openDrawer();
+            }}
+          >
+            <Ionicons name="menu" size={28} color="#83B1C9" />
+          </TouchableOpacity>
+        </View>
+
+        {/* User Info */}
         <View style={styles.userCard}>
           <Text style={styles.userName}>Ajay kumar</Text>
           <Text style={styles.userRole}>L.C.O</Text>
@@ -460,7 +467,7 @@ const DrawerContent = ({ navigation }) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('LoginScreen')}
+        onPress={() => navigation.navigate("LoginScreen")}
         style={styles.logoutContainer}
       >
         <Ionicons name="log-out-outline" size={20} color="#f00" />
