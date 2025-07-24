@@ -6,17 +6,34 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Keyboard,
+  Alert,
 } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { sendOtp } from '../../services/forgotPasswordService';
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
 
-  const handleResetPassword = () => {
-    // You can optionally validate email here
-    navigation.navigate('VerificationScreen');
+  const handleResetPassword = async () => {
+    if (!email.trim()) {
+      Alert.alert('Missing Email', 'Please enter your email address.');
+      return;
+    }
+
+    try {
+      Keyboard.dismiss();
+      await sendOtp(email.trim());
+      navigation.navigate('VerificationScreen', { email: email.trim() });
+    } catch (error) {
+      console.error('OTP Send Failed:', error.response?.data || error.message);
+      Alert.alert(
+        'Error',
+        error.response?.data?.detail || 'Failed to send OTP. Please check your email and try again.'
+      );
+    }
   };
 
   return (
@@ -28,9 +45,9 @@ const ForgotPasswordScreen = () => {
           resizeMode="contain"
         />
 
-        <Text style={styles.title}>Forgot password ?</Text>
+        <Text style={styles.title}>Forgot password?</Text>
         <Text style={styles.subtitle}>
-          No worries we will sent you{'\n'}reset instructions
+          No worries! We’ll send you{'\n'}reset instructions.
         </Text>
 
         <View style={styles.inputWrapper}>
@@ -40,13 +57,15 @@ const ForgotPasswordScreen = () => {
             placeholder="Your Email Address"
             placeholderTextColor="#999"
             keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
             value={email}
             onChangeText={setEmail}
           />
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-          <Text style={styles.buttonText}>Reset password</Text>
+          <Text style={styles.buttonText}>Reset Password</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

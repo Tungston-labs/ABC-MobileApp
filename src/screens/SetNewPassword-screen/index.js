@@ -6,15 +6,43 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { resetPassword } from '../../services/forgotPasswordService';
 
 const SetNewPasswordScreen = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const email = route?.params?.email;
+
+  const handleReset = async () => {
+    if (!password || !confirmPassword) {
+      Alert.alert('Error', 'Both fields are required.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match.');
+      return;
+    }
+
+    try {
+      await resetPassword(email, password, confirmPassword);
+      Alert.alert('Success', 'Password reset successful. Please login.');
+      navigation.navigate('LoginScreen'); // change 'Login' to your login screen route name
+    } catch (error) {
+      console.error('Reset failed:', error.response?.data || error.message);
+      Alert.alert('Reset Failed', error.response?.data?.error || 'Something went wrong.');
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,10 +71,10 @@ const SetNewPasswordScreen = () => {
               placeholder="Password"
               secureTextEntry={!passwordVisible}
               placeholderTextColor="#999"
+              value={password}
+              onChangeText={setPassword}
             />
-            <TouchableOpacity
-              onPress={() => setPasswordVisible(!passwordVisible)}
-            >
+            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
               <Ionicons
                 name={passwordVisible ? 'eye-off-outline' : 'eye-outline'}
                 size={22}
@@ -67,10 +95,10 @@ const SetNewPasswordScreen = () => {
               placeholder="Confirm Password"
               secureTextEntry={!confirmVisible}
               placeholderTextColor="#999"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
             />
-            <TouchableOpacity
-              onPress={() => setConfirmVisible(!confirmVisible)}
-            >
+            <TouchableOpacity onPress={() => setConfirmVisible(!confirmVisible)}>
               <Ionicons
                 name={confirmVisible ? 'eye-off-outline' : 'eye-outline'}
                 size={22}
@@ -80,7 +108,7 @@ const SetNewPasswordScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleReset}>
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>

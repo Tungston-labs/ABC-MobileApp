@@ -6,33 +6,51 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Alert,
+  Keyboard,
 } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { verifyOtp } from '../../services/forgotPasswordService';
 
-const VerificationScreen = () => {
-  const [otp, setOtp] = useState(['', '', '', '', '']);
+const VerificationScreen = ({ route }) => {
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const inputs = useRef([]);
   const navigation = useNavigation();
+  const email = route?.params?.email;
 
   const handleChange = (text, index) => {
+    if (!/^\d*$/.test(text)) return; // Allow only digits
+
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
 
-    if (text && index < 4) {
+    if (text && index < otp.length - 1) {
       inputs.current[index + 1].focus();
     }
   };
 
-  const handleContinue = () => {
-    // Add validation here if needed
-    navigation.navigate('SetNewPasswordScreen');
+  const handleContinue = async () => {
+    const enteredOtp = otp.join('');
+    if (enteredOtp.length !== 6) {
+      Alert.alert('Invalid OTP', 'Please enter all 6 digits of the OTP.');
+      return;
+    }
+
+    try {
+      Keyboard.dismiss();
+      await verifyOtp(email, enteredOtp);
+      navigation.navigate('SetNewPasswordScreen', { email });
+    } catch (error) {
+      console.error('OTP Verification Failed:', error.response?.data || error.message);
+      Alert.alert('Verification Failed', 'Invalid OTP. Please try again.');
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.backBtn}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
         <Text style={styles.backArrow}>{'←'}</Text>
       </TouchableOpacity>
 
@@ -44,7 +62,9 @@ const VerificationScreen = () => {
         />
 
         <Text style={styles.title}>Verification</Text>
-        <Text style={styles.subtitle}>We sent a code to Dummy@gmail.com</Text>
+        <Text style={styles.subtitle}>
+          We sent a code to {email || 'your email'}
+        </Text>
 
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (
@@ -56,6 +76,8 @@ const VerificationScreen = () => {
               maxLength={1}
               onChangeText={(text) => handleChange(text, index)}
               value={digit}
+              returnKeyType="next"
+              autoFocus={index === 0}
             />
           ))}
         </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,12 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import styles from './styles';
 import { searchCustomers } from '../../services/customerService';
 import UserGeneral from '../UserGeneral-screen';
-
+import { logoutUser } from '../../services/logoutService';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +27,18 @@ const HomeScreen = ({ navigation }) => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [lcoName, setLcoName] = useState('');
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        const user = JSON.parse(userData);
+        setLcoName(user.lco_name || user.username || user.email || 'LCO');
+      }
+    };
+    loadUser();
+  }, []);
 
   const handleSearch = async (text) => {
     setSearchText(text);
@@ -39,8 +53,6 @@ const HomeScreen = ({ navigation }) => {
     try {
       setLoading(true);
       const users = await searchCustomers(trimmedText);
-
-      // Ensure users is always an array
       if (Array.isArray(users)) {
         setFilteredUsers(users);
       } else {
@@ -124,15 +136,19 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Home</Text>
-        <TouchableOpacity
-          style={styles.menuIcon}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Ionicons name="menu" size={28} color="white" />
-        </TouchableOpacity>
+        <View style={styles.headerTopRow}>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name="menu" size={28} color="#000" />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.userCard}>
-          <Text style={styles.userName}>Ajay Kumar</Text>
+          <Text style={styles.userName}>{lcoName}</Text>
           <Text style={styles.userRole}>L.C.O</Text>
         </View>
       </View>
@@ -155,19 +171,42 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-// ✅ Drawer content (logout section)
+// ✅ Drawer content with Logout
 const DrawerContent = ({ navigation }) => {
+  const [lcoName, setLcoName] = useState('');
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        const user = JSON.parse(userData);
+        setLcoName(user.lco_name || user.username || user.email || 'LCO');
+      }
+    };
+    loadUser();
+  }, []);
+
+  const handleLogout = async () => {
+    const result = await logoutUser();
+    if (result.success) {
+      await AsyncStorage.clear(); // Just to be safe
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'LoginScreen' }],
+      });
+    } else {
+      alert('Logout failed. Please try again.');
+    }
+  };
+
   return (
     <View style={styles.drawerContainer}>
       <View style={styles.drawerProfile}>
-        <Text style={styles.drawerName}>Ajay kumar</Text>
+        <Text style={styles.drawerName}>{lcoName}</Text>
         <Text style={styles.drawerRole}>L.C.O</Text>
       </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('LoginScreen')}
-        style={styles.logoutContainer}
-      >
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutContainer}>
         <Ionicons name="log-out-outline" size={20} color="#f00" />
         <Text style={styles.logoutText}>Log out</Text>
       </TouchableOpacity>
@@ -175,15 +214,15 @@ const DrawerContent = ({ navigation }) => {
   );
 };
 
-// ✅ Stack containing Home and UserGeneral
+// ✅ Stack
 const MainStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="UserTabs" component={UserGeneral} />
-    </Stack.Navigator>
+    <Stack.Screen name="UserGeneral" component={UserGeneral} />
+  </Stack.Navigator>
 );
 
-// ✅ Drawer wraps the MainStack
+// ✅ Drawer + Stack combo
 const RootNavigator = () => {
   return (
     <Drawer.Navigator
