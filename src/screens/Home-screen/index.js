@@ -30,26 +30,38 @@ const HomeScreen = ({ navigation }) => {
   const [lcoName, setLcoName] = useState('');
 
   useEffect(() => {
-    const loadUser = async () => {
-      const userData = await AsyncStorage.getItem('user');
-      if (userData) {
-        const user = JSON.parse(userData);
-        setLcoName(user.lco_name || user.username || user.email || 'LCO');
+    const loadInitialData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('user');
+        if (userData) {
+          const user = JSON.parse(userData);
+          setLcoName(user.lco_name || user.username || user.email || 'LCO');
+  
+          setLoading(true);
+          const allCustomers = await searchCustomers('');
+          if (Array.isArray(allCustomers)) {
+            setFilteredUsers(allCustomers);
+          }
+                    setFilteredUsers(allCustomers);
+        }
+      } catch (error) {
+        console.error('Error loading customers:', error);
+        setErrorMsg('Failed to load customers');
+      } finally {
+        setLoading(false);
       }
     };
-    loadUser();
+  
+    loadInitialData();
   }, []);
+  
 
   const handleSearch = async (text) => {
     setSearchText(text);
     setErrorMsg('');
-
+  
     const trimmedText = text.trim();
-    if (!trimmedText) {
-      setFilteredUsers([]);
-      return;
-    }
-
+  
     try {
       setLoading(true);
       const users = await searchCustomers(trimmedText);
@@ -67,17 +79,18 @@ const HomeScreen = ({ navigation }) => {
       setLoading(false);
     }
   };
+  
 
   const renderContent = () => {
     if (loading) {
       return (
         <View style={styles.imageContainer}>
           <ActivityIndicator size="large" color="#007bff" />
-          <Text style={styles.placeholderText}>Searching...</Text>
+          <Text style={styles.placeholderText}>Loading...</Text>
         </View>
       );
     }
-
+  
     if (errorMsg) {
       return (
         <View style={styles.imageContainer}>
@@ -90,48 +103,38 @@ const HomeScreen = ({ navigation }) => {
         </View>
       );
     }
-
-    if (searchText === '') {
+  
+    // ✅ Show customers if loaded
+    if (Array.isArray(filteredUsers) && filteredUsers.length > 0) {
       return (
-        <View style={styles.imageContainer}>
-          <Image
-            source={require('../../assets/search-default.png')}
-            style={styles.image}
-            resizeMode="contain"
-          />
-          <Text style={styles.placeholderText}>Search for a customer</Text>
+        <View style={styles.listContainer}>
+          {filteredUsers.map((user, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.userItem}
+              onPress={() => navigation.navigate('UserTabs', { user })}
+            >
+              <Text style={styles.userItemName}>{user.full_name || user.name}</Text>
+              <Text style={styles.userItemPhone}>Ph: {user.phone}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       );
     }
-
-    if (!Array.isArray(filteredUsers) || filteredUsers.length === 0) {
-      return (
-        <View style={styles.imageContainer}>
-          <Image
-            source={require('../../assets/search-no-data.png')}
-            style={styles.image}
-            resizeMode="contain"
-          />
-          <Text style={styles.placeholderText}>No results found</Text>
-        </View>
-      );
-    }
-
+  
+    // 🔻 Only show this when no customers at all
     return (
-      <View style={styles.listContainer}>
-        {filteredUsers.map((user, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.userItem}
-            onPress={() => navigation.navigate('UserTabs', { user })}
-          >
-            <Text style={styles.userItemName}>{user.full_name || user.name}</Text>
-            <Text style={styles.userItemPhone}>Ph: {user.phone}</Text>
-          </TouchableOpacity>
-        ))}
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('../../assets/search-default.png')}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <Text style={styles.placeholderText}>Search for a customer</Text>
       </View>
     );
   };
+  
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -187,14 +190,15 @@ const DrawerContent = ({ navigation }) => {
   }, []);
 
   const handleLogout = async () => {
-    const result = await logoutUser();
-    if (result.success) {
+    // const result = await logoutUser();
+    // if (result.success) {
+    try{
       await AsyncStorage.clear(); // Just to be safe
       navigation.reset({
         index: 0,
         routes: [{ name: 'LoginScreen' }],
       });
-    } else {
+    } catch(err) {
       alert('Logout failed. Please try again.');
     }
   };

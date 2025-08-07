@@ -43,19 +43,21 @@ export default StyleSheet.create({
   },
   otpContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 40,
   },
+  
   otpInput: {
-    width: 50,
-    height: 60,
+    width: 30,
+    height: 50,
     borderWidth: 1.5,
     borderColor: '#83B1C9',
     borderRadius: 8,
     textAlign: 'center',
     fontSize: 20,
     color: '#000',
+    marginHorizontal: 5
   },
   button: {
     backgroundColor: '#83B1C9',

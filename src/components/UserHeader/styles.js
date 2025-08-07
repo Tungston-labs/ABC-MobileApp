@@ -53,7 +53,14 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: '#000000',
   },
-
+  editIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 15,
+    zIndex: 10,
+  },
+  
+  
   // Tabs Styling
   tabsContainer: {
     flexDirection: 'row',

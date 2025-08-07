@@ -1,29 +1,40 @@
+// components/UserHeader.js
 import React from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from './styles';
+import { IoMdSave } from "react-icons/io";
+import { IoCreateOutline } from "react-icons/io5"; // or your existing pencil/edit icon
 
 const tabs = ['General', 'Network', 'ISP'];
 const { width } = Dimensions.get('window');
 
-const UserHeader = ({ user }) => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const activeTab = route.name.replace('User', '');
-
-  const handleTabChange = (tab) => {
-    navigation.navigate(`User${tab}`);
-  };
-
+const UserHeader = ({
+  user,
+  onBack,
+  activeTab,
+  onTabChange,
+  onEdit,
+  isEditing,
+}) => {
   return (
     <View style={{ position: 'absolute', top: 0, width: width, zIndex: 1000, backgroundColor: '#F3F3F3' }}>
       <View style={styles.headerWrapper}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        {/* Back Button */}
+        <TouchableOpacity style={styles.backButton} onPress={onBack}>
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
 
+        {/* Profile Info */}
         <View style={styles.profileCard}>
+           {/* Edit / Save Icon */}
+           <TouchableOpacity onPress={onEdit} style={styles.editIcon}>
+          <Ionicons
+            name={isEditing ? 'save' : 'create-outline'}
+            size={24}
+            color="#000"
+          />
+        </TouchableOpacity>
           <Text style={styles.profileName}>{user?.full_name || 'N/A'}</Text>
           <Text style={styles.profilePhone}>Ph: {user?.phone || 'N/A'}</Text>
           <View style={styles.updatedWrapper}>
@@ -32,6 +43,9 @@ const UserHeader = ({ user }) => {
           </View>
         </View>
 
+       
+
+        {/* Tabs */}
         <View style={styles.tabsContainer}>
           {tabs.map((tab) => {
             const isActive = activeTab === tab;
@@ -39,7 +53,7 @@ const UserHeader = ({ user }) => {
               <TouchableOpacity
                 key={tab}
                 style={isActive ? styles.activeTab : styles.inactiveTab}
-                onPress={() => handleTabChange(tab)}
+                onPress={() => onTabChange(tab)}
               >
                 <Text style={isActive ? styles.activeTabText : styles.inactiveTabText}>
                   {tab}
