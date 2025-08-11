@@ -8,6 +8,7 @@ import ForgotPasswordScreen from '../screens/ForgotPassword-screen';
 import VerificationScreen from '../screens/Verification-screen';
 import SetNewPasswordScreen from '../screens/SetNewPassword-screen';
 import UserTabs from '../screens/UserTabs'; // ✅ New wrapper screen
+import SplashScreen from '../screens/Splash-screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,14 +17,14 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="LoginScreen"
+        initialRouteName="SplashScreen"
       >
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
         <Stack.Screen name="VerificationScreen" component={VerificationScreen} />
         <Stack.Screen name="SetNewPasswordScreen" component={SetNewPasswordScreen} />
-
+        <Stack.Screen name ="SplashScreen" component={SplashScreen}/>
         {/* ✅ Combine UserGeneral, Network, ISP via UserTabs */}
         <Stack.Screen name="UserTabs" component={UserTabs} />
       </Stack.Navigator>

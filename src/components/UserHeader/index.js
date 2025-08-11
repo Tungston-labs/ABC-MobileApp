@@ -3,8 +3,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
-import { IoMdSave } from "react-icons/io";
-import { IoCreateOutline } from "react-icons/io5"; // or your existing pencil/edit icon
 
 const tabs = ['General', 'Network', 'ISP'];
 const { width } = Dimensions.get('window');
