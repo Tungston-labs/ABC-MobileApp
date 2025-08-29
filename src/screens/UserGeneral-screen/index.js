@@ -10,6 +10,8 @@ import {
 import styles from './styles';
 import ProfileHeader from '../../components/UserHeader';
 import { useCustomer } from '../../components/context/CustomerContext';
+import { updateCustomer } from '../../services/customerService';
+
 
 const UserProfileScreen = ({ navigation }) => {
   const user = useCustomer();
@@ -21,14 +23,26 @@ const UserProfileScreen = ({ navigation }) => {
     navigation.navigate('HomeScreen');
   };
 
-  const handleEditToggle = () => {
+  const handleEditToggle = async () => {
     if (isEditing) {
-      // Save logic (replace this with API call)
-      console.log('Saving data:', formData);
-      Alert.alert('Success', 'Changes saved successfully.');
+      try {
+        const updatedUser = await updateCustomer(user.id, formData);
+        setFormData(updatedUser);  // update state
+        setIsEditing(false);       // exit edit mode
+        Alert.alert('Success', 'Changes saved successfully.');
+      } catch (error) {
+        console.error('Error updating customer:', error.response?.data || error.message);
+        Alert.alert('Error', 'Failed to save changes.');
+      }
+    } else {
+      setIsEditing(true); // enter edit mode
     }
-    setIsEditing((prev) => !prev);
   };
+  
+  
+  
+  
+  
 
   const handleChange = (key, value) => {
     setFormData((prev) => ({

@@ -18,25 +18,22 @@
     "android": {
       "package": "com.anonymous.abcgroupapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
       "config": {
         "cleartextTraffic": true
-      },
-      "res": {
-        "xml": "./assets/xml"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logo.png"
     },
     "extra": {
       "eas": {
-        "projectId": "5a0685f8-04d5-4af2-9789-3a641a3b5256"
+        "projectId": "67cf5c4c-6a3e-4136-88b8-d905707cff9a"
       }
     },
-    "owner": "ansal_m_azeez"
+    "owner": "tungstonlabs"
   }
 }

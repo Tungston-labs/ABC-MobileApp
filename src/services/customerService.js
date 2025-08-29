@@ -18,14 +18,37 @@ export const searchCustomers = async (searchText = '') => {
 };
 
 
-// Update a customer by ID
-export const updateCustomer = async (customerId, updatedData) => {
-  try {
-    const response = await api.put(`client/customer/${customerId}/`, updatedData);
-    console.log('Customer update response:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating customer:', error.response?.data || error.message);
-    throw error;
-  }
+export const updateCustomer = async (customerId, data) => {
+  const formData = new FormData();
+
+  Object.keys(data).forEach((key) => {
+    const value = data[key];
+    if (value === undefined || value === null) return;
+
+    // Only append file object if user selected a new image
+    if (key === 'profile_pic' && value?.uri) {
+      let uri = value.uri;
+      if (Platform.OS === 'android' && !uri.startsWith('file://')) {
+        uri = 'file://' + uri;
+      }
+
+      formData.append('profile_pic', {
+        uri,
+        name: value.name || 'profile.jpg',
+        type: value.type || 'image/jpeg',
+      });
+    } else if (key !== 'profile_pic') {
+      // Append all other fields as strings
+      formData.append(key, String(value));
+    }
+    // Do NOT append profile_pic if it’s just a URL
+  });
+
+  const response = await api.patch(`client/customer/${customerId}/`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+  return response.data || {};
 };
+
+
