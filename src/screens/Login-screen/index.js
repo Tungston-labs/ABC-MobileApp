@@ -10,17 +10,19 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  Switch,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/Ionicons";
-import { loginUser } from "../../services/loginService"; // 👈 Add this
+import { loginUser } from "../../services/loginService"; 
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false); // ✅ Remember Me state
   const navigation = useNavigation();
 
   const handleLogin = async () => {
@@ -31,11 +33,8 @@ export default function LoginScreen() {
 
     setLoading(true);
     try {
-      const data = await loginUser(email, password);
-
-      // Save tokens if needed (Optional — your axios already handles it in web)
-      // await AsyncStorage.setItem('token', data.access);
-      // await AsyncStorage.setItem('refreshToken', data.refresh);
+      // ✅ Pass rememberMe to loginUser
+      const data = await loginUser(email, password, rememberMe);
 
       Alert.alert("Login Success", `Welcome, ${data.user?.name || "User"}!`);
       navigation.navigate("HomeScreen");
@@ -102,6 +101,17 @@ export default function LoginScreen() {
                 />
               </TouchableOpacity>
             </View>
+          </View>
+
+          {/* ✅ Remember Me Switch */}
+          <View style={styles.rememberMeContainer}>
+            <Switch
+              value={rememberMe}
+              onValueChange={setRememberMe}
+              thumbColor={rememberMe ? "#83B1C9" : "#f4f3f4"}
+              trackColor={{ false: "#ccc", true: "#a3d1e6" }}
+            />
+            <Text style={styles.rememberMeText}>Remember Me</Text>
           </View>
 
           <TouchableOpacity style={styles.button} onPress={handleLogin}>

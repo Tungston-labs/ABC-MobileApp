@@ -8,10 +8,13 @@ import {
   SafeAreaView,
   Alert,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { verifyOtp } from '../../services/forgotPasswordService';
+import { Ionicons } from '@expo/vector-icons'; // For back arrow
 
 const VerificationScreen = ({ route }) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -20,14 +23,46 @@ const VerificationScreen = ({ route }) => {
   const email = route?.params?.email;
 
   const handleChange = (text, index) => {
-    if (!/^\d*$/.test(text)) return; // Allow only digits
+    // Handle paste of full OTP
+    if (text.length > 1) {
+      const newOtp = text.split('').slice(0, 6);
+      while (newOtp.length < 6) newOtp.push('');
+      setOtp(newOtp);
+      // Fill each input box correctly
+      newOtp.forEach((digit, idx) => {
+        if (inputs.current[idx]) {
+          inputs.current[idx].setNativeProps({ text: digit });
+        }
+      });
+      // Focus next empty input or last input
+      const nextIndex = newOtp.findIndex((val) => val === '');
+      if (nextIndex !== -1) {
+        inputs.current[nextIndex].focus();
+      } else {
+        inputs.current[5].focus();
+      }
+      return;
+    }
+
+    // Allow only digits
+    if (!/^\d*$/.test(text)) return;
 
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
 
+    // Move to next input if text entered
     if (text && index < otp.length - 1) {
       inputs.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyPress = ({ nativeEvent }, index) => {
+    if (nativeEvent.key === 'Backspace' && otp[index] === '' && index > 0) {
+      inputs.current[index - 1].focus();
+      const newOtp = [...otp];
+      newOtp[index - 1] = '';
+      setOtp(newOtp);
     }
   };
 
@@ -50,44 +85,58 @@ const VerificationScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-        <Text style={styles.backArrow}>{'←'}</Text>
-      </TouchableOpacity>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
+        <View style={{ flex: 1 }}>
+          {/* Back Arrow */}
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 40, left: 15, zIndex: 10 }}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={28} color="#83B1C9" />
+          </TouchableOpacity>
 
-      <View style={styles.content}>
-        <Image
-          source={require('../../assets/logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-
-        <Text style={styles.title}>Verification</Text>
-        <Text style={styles.subtitle}>
-          We sent a code to {email || 'your email'}
-        </Text>
-
-        <View style={styles.otpContainer}>
-          {otp.map((digit, index) => (
-            <TextInput
-              key={index}
-              ref={(el) => (inputs.current[index] = el)}
-              style={styles.otpInput}
-              keyboardType="number-pad"
-              maxLength={1}
-              onChangeText={(text) => handleChange(text, index)}
-              value={digit}
-              returnKeyType="next"
-              autoFocus={index === 0}
+          <View style={styles.content}>
+            <Image
+              source={require('../../assets/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
             />
-          ))}
-        </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleContinue}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
-      </View>
+            <Text style={styles.title}>Verification</Text>
+            <Text style={styles.subtitle}>
+              We sent a code to {email || 'your email'}
+            </Text>
+
+            <View style={styles.otpContainer}>
+              {otp.map((digit, index) => (
+                <TextInput
+                  key={index}
+                  ref={(el) => (inputs.current[index] = el)}
+                  style={styles.otpInput}
+                  keyboardType="number-pad"
+                  maxLength={1}
+                  onChangeText={(text) => handleChange(text, index)}
+                  value={digit}
+                  onKeyPress={(e) => handleKeyPress(e, index)}
+                  returnKeyType="next"
+                  autoFocus={index === 0}
+                />
+              ))}
+            </View>
+
+            <TouchableOpacity style={styles.button} onPress={handleContinue}>
+              <Text style={styles.buttonText}>Continue</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 export default VerificationScreen;
+                                                             

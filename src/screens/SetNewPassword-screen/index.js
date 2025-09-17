@@ -7,6 +7,8 @@ import {
   Image,
   SafeAreaView,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
@@ -46,72 +48,84 @@ const SetNewPasswordScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="#83B1C9" />
-      </TouchableOpacity>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
+        <View style={{ flex: 1 }}>
+          {/* Back Arrow */}
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 40, left: 15, zIndex: 10 }}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={24} color="#83B1C9" />
+          </TouchableOpacity>
 
-      <View style={styles.content}>
-        <Image
-          source={require('../../assets/logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-
-        <Text style={styles.title}>Set new password</Text>
-        <Text style={styles.subtitle}>Enter new password</Text>
-
-        {/* Password Field */}
-        <View style={styles.inputContainer}>
-          <View style={styles.floatingLabelContainer}>
-            <Text style={styles.floatingLabel}>Password</Text>
-          </View>
-          <View style={styles.passwordRow}>
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry={!passwordVisible}
-              placeholderTextColor="#999"
-              value={password}
-              onChangeText={setPassword}
+          <View style={styles.content}>
+            <Image
+              source={require('../../assets/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
             />
-            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
-              <Ionicons
-                name={passwordVisible ? 'eye-off-outline' : 'eye-outline'}
-                size={22}
-                color="#999"
-              />
+
+            <Text style={styles.title}>Set new password</Text>
+            <Text style={styles.subtitle}>Enter new password</Text>
+
+            {/* Password Field */}
+            <View style={styles.inputContainer}>
+              <View style={styles.floatingLabelContainer}>
+                <Text style={styles.floatingLabel}>Password</Text>
+              </View>
+              <View style={styles.passwordRow}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  secureTextEntry={!passwordVisible}
+                  placeholderTextColor="#999"
+                  value={password}
+                  onChangeText={setPassword}
+                />
+                <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+                  <Ionicons
+                    name={passwordVisible ? 'eye-off-outline' : 'eye-outline'}
+                    size={22}
+                    color="#999"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Confirm Password Field */}
+            <View style={styles.inputContainer}>
+              <View style={styles.floatingLabelContainer}>
+                <Text style={styles.floatingLabel}>Confirm Password</Text>
+              </View>
+              <View style={styles.passwordRow}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Confirm Password"
+                  secureTextEntry={!confirmVisible}
+                  placeholderTextColor="#999"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                />
+                <TouchableOpacity onPress={() => setConfirmVisible(!confirmVisible)}>
+                  <Ionicons
+                    name={confirmVisible ? 'eye-off-outline' : 'eye-outline'}
+                    size={22}
+                    color="#999"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <TouchableOpacity style={styles.button} onPress={handleReset}>
+              <Text style={styles.buttonText}>Continue</Text>
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* Confirm Password Field */}
-        <View style={styles.inputContainer}>
-          <View style={styles.floatingLabelContainer}>
-            <Text style={styles.floatingLabel}>Confirm Password</Text>
-          </View>
-          <View style={styles.passwordRow}>
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              secureTextEntry={!confirmVisible}
-              placeholderTextColor="#999"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <TouchableOpacity onPress={() => setConfirmVisible(!confirmVisible)}>
-              <Ionicons
-                name={confirmVisible ? 'eye-off-outline' : 'eye-outline'}
-                size={22}
-                color="#999"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleReset}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

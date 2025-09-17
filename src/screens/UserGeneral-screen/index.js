@@ -11,8 +11,7 @@ import styles from './styles';
 import ProfileHeader from '../../components/UserHeader';
 import { useCustomer } from '../../components/context/CustomerContext';
 import { updateCustomer } from '../../services/customerService';
-
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const UserProfileScreen = ({ navigation }) => {
   const user = useCustomer();
   const [activeTab, setActiveTab] = useState('General');
@@ -38,11 +37,6 @@ const UserProfileScreen = ({ navigation }) => {
       setIsEditing(true); // enter edit mode
     }
   };
-  
-  
-  
-  
-  
 
   const handleChange = (key, value) => {
     setFormData((prev) => ({
@@ -139,6 +133,7 @@ const UserProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+
       <ProfileHeader
         user={formData}
         onBack={handleBack}
@@ -147,15 +142,21 @@ const UserProfileScreen = ({ navigation }) => {
         onTabChange={setActiveTab}
         isEditing={isEditing}
       />
-
-
+      <KeyboardAwareScrollView
+      contentContainerStyle={styles.formContainer}
+      showsVerticalScrollIndicator={false}
+      enableOnAndroid={true}
+      extraScrollHeight={20} // small gap above keyboard
+    >
+      
       <ScrollView
         style={styles.scrollArea}
-        contentContainerStyle={[styles.formContainer, { paddingTop: 380 }]}
+        contentContainerStyle={[styles.formContainer, { paddingTop: 350,paddingBottom:120 }]}
         showsVerticalScrollIndicator={false}
       >
         {renderContent()}
       </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

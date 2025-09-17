@@ -10,6 +10,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/lato": "^0.4.0",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/drawer": "^7.5.3",
     "@react-navigation/material-top-tabs": "^7.3.2",
@@ -18,10 +19,12 @@
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.11.0",
     "expo": "~53.0.17",
+    "expo-font": "~13.3.2",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "0.79.5",
     "react-native-gesture-handler": "^2.27.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-pager-view": "^6.8.1",
     "react-native-reanimated": "^3.17.0",
     "react-native-safe-area-context": "^5.4.0",

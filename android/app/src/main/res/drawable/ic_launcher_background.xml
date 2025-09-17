@@ -4,3 +4,4 @@
     <bitmap android:gravity="center" android:src="@drawable/splashscreen_logo"/>
   </item>
 </layer-list>
+

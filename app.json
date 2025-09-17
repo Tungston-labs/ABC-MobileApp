@@ -4,21 +4,16 @@
     "slug": "abc-group-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "package": "com.anonymous.abcgroupapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -29,11 +24,14 @@
     "web": {
       "favicon": "./assets/logo.png"
     },
+    "owner": "ansalt",
+    "plugins": [
+      "expo-font"
+    ],
     "extra": {
       "eas": {
-        "projectId": "67cf5c4c-6a3e-4136-88b8-d905707cff9a"
+        "projectId": "45c5393c-8626-49a4-a6d0-459d2a1e7069"
       }
-    },
-    "owner": "tungstonlabs"
+    }
   }
 }

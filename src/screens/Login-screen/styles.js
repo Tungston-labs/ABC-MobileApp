@@ -28,9 +28,9 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: "Lato_700Bold",
     marginBottom: 30,
-    color: '#000',
+    color: 'black',
     textAlign: 'left',
   },
   inputWrapper: {
@@ -46,6 +46,7 @@ export default StyleSheet.create({
     fontSize: 14,
     color: '#000',
     zIndex: 1,
+    fontFamily: "Lato_400Regular",
   },
   input: {
     width: '100%',
@@ -55,6 +56,7 @@ export default StyleSheet.create({
     borderColor: '#83B1C9',
     borderRadius: 8,
     fontSize: 16,
+    fontFamily: "Lato_700Bold",
     color: '#000',
     backgroundColor: '#FFFFFF',
   },
@@ -76,13 +78,29 @@ export default StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: "Lato_700Bold",
   },
   reset: {
     marginTop: 16,
     color: '#83B1C9',
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: '500',
+    fontFamily: "Lato_500Regular",
   },
+
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: -10,
+  },
+  rememberMeText: {
+    marginLeft: 10,
+    fontSize: 16,
+    color: '#000',
+    fontFamily: "Lato_400Regular",
+  },
+
+
 });
+

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Image,  } from "react-native";
 import styles from './styles';
-const SplashScreen = ({ navigation }) => {
+const Screen = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace("LoginScreen"); 
@@ -21,4 +21,4 @@ const SplashScreen = ({ navigation }) => {
   );
 };
 
-export default SplashScreen;
+export default Screen;

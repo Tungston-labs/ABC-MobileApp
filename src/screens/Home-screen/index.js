@@ -126,11 +126,11 @@ const HomeScreen = ({ navigation }) => {
     return (
       <View style={styles.imageContainer}>
         <Image
-          source={require('../../assets/search-default.png')}
+          source={require('../../assets/search-no-data.png')}
           style={styles.image}
           resizeMode="contain"
         />
-        <Text style={styles.placeholderText}>Search for a customer</Text>
+        <Text style={styles.placeholderText}>Data Not Found</Text>
       </View>
     );
   };

@@ -40,17 +40,20 @@ menuIcon: {
   padding: 8,
 },
 
-  userCard: {
-    marginTop: 40,
-    backgroundColor: '#83B1C9',
-    borderRadius: 10,
-    padding: 10,
-    elevation: 2,
-    shadowColor: '#E8E8E8',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
+userCard: {
+  marginTop: 40,
+  backgroundColor: '#83B1C9',
+  borderRadius: 10,
+  padding: 10,
+  elevation: 20,
+ 
+  // iOS shadow
+  shadowColor: '#000',
+  shadowOffset: { width: 3, height: 3 }, // right (x), bottom (y)
+  shadowOpacity: 0.3,
+  shadowRadius: 4,
+},
+
   userName: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -91,7 +94,7 @@ menuIcon: {
     padding: 15,
     borderRadius: 10,
     marginBottom: 12,
-    elevation: 1,
+    elevation: 10,
   },
   userItemName: {
     fontSize: 15,
@@ -112,8 +115,8 @@ menuIcon: {
     paddingHorizontal: 20,
   },
   image: {
-    width: 280,
-    height: 220,
+    width: 300,
+    height:240,
     marginBottom: 20,
   },
   placeholderText: {

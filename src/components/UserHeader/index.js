@@ -25,14 +25,14 @@ const UserHeader = ({
 
         {/* Profile Info */}
         <View style={styles.profileCard}>
-           {/* Edit / Save Icon */}
-           <TouchableOpacity onPress={onEdit} style={styles.editIcon}>
-          <Ionicons
-            name={isEditing ? 'save' : 'create-outline'}
-            size={24}
-            color="#000"
-          />
-        </TouchableOpacity>
+          {/* Edit / Save Icon */}
+          <TouchableOpacity onPress={onEdit} style={styles.editIcon}>
+            <Ionicons
+              name={isEditing ? 'save' : 'create-outline'}
+              size={24}
+              color="#000"
+            />
+          </TouchableOpacity>
           <Text style={styles.profileName}>{user?.full_name || 'N/A'}</Text>
           <Text style={styles.profilePhone}>Ph: {user?.phone || 'N/A'}</Text>
           <View style={styles.updatedWrapper}>
@@ -41,7 +41,7 @@ const UserHeader = ({
           </View>
         </View>
 
-       
+
 
         {/* Tabs */}
         <View style={styles.tabsContainer}>
