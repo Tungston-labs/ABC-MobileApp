@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+
 import {
   View,
   Text,
@@ -32,17 +34,24 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const userData = await AsyncStorage.getItem('user');
-        if (userData) {
-          const user = JSON.parse(userData);
-          setLcoName(user.lco_name || user.username || user.email || 'LCO');
+        const storedUser = await AsyncStorage.getItem('user');
+if (storedUser) {
+  const user = JSON.parse(storedUser);
+  setLcoName(user.lco_name || user.username || user.email || 'LCO');
+}
+
   
-          setLoading(true);
-          const allCustomers = await searchCustomers('');
-          if (Array.isArray(allCustomers)) {
-            setFilteredUsers(allCustomers);
-          }
-                    setFilteredUsers(allCustomers);
+        setLoading(true);
+  
+        // ✅ Don’t pass token manually, axios.js interceptor handles it
+        const allCustomers = await searchCustomers('');
+        // console.log("Fetched customers:", allCustomers);
+  
+        if (Array.isArray(allCustomers)) {
+          setFilteredUsers(allCustomers);
+        } else {
+          setFilteredUsers([]);
+          setErrorMsg('No customers found');
         }
       } catch (error) {
         console.error('Error loading customers:', error);
@@ -55,7 +64,6 @@ const HomeScreen = ({ navigation }) => {
     loadInitialData();
   }, []);
   
-
   const handleSearch = async (text) => {
     setSearchText(text);
     setErrorMsg('');
@@ -175,14 +183,16 @@ const HomeScreen = ({ navigation }) => {
 };
 
 // ✅ Drawer content with Logout
+
+
 const DrawerContent = ({ navigation }) => {
   const [lcoName, setLcoName] = useState('');
 
   useEffect(() => {
     const loadUser = async () => {
-      const userData = await AsyncStorage.getItem('user');
-      if (userData) {
-        const user = JSON.parse(userData);
+      const storedUser = await AsyncStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
         setLcoName(user.lco_name || user.username || user.email || 'LCO');
       }
     };
@@ -190,17 +200,33 @@ const DrawerContent = ({ navigation }) => {
   }, []);
 
   const handleLogout = async () => {
-    // const result = await logoutUser();
-    // if (result.success) {
-    try{
-      await AsyncStorage.clear(); // Just to be safe
+    try {
+      await AsyncStorage.clear(); // Clear tokens & user
       navigation.reset({
         index: 0,
         routes: [{ name: 'LoginScreen' }],
       });
-    } catch(err) {
+    } catch (err) {
       alert('Logout failed. Please try again.');
     }
+  };
+
+  const confirmLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel', // cancels the alert
+        },
+        {
+          text: 'Yes',
+          onPress: handleLogout, // logs out
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
@@ -210,13 +236,14 @@ const DrawerContent = ({ navigation }) => {
         <Text style={styles.drawerRole}>L.C.O</Text>
       </View>
 
-      <TouchableOpacity onPress={handleLogout} style={styles.logoutContainer}>
+      <TouchableOpacity onPress={confirmLogout} style={styles.logoutContainer}>
         <Ionicons name="log-out-outline" size={20} color="#f00" />
         <Text style={styles.logoutText}>Log out</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
 
 // ✅ Stack
 const MainStack = () => (

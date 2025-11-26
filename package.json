@@ -1,5 +1,5 @@
 {
-  "name": "abc-group-app",
+  "name": "ABC",
   "license": "0BSD",
   "version": "1.0.0",
   "main": "index.js",
@@ -29,6 +29,7 @@
     "react-native-reanimated": "^3.17.0",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
+    "react-native-sweet-alert": "^3.5.0",
     "react-native-tab-view": "^4.1.2",
     "react-native-vector-icons": "^10.2.0",
     "react-redux": "^9.2.0",

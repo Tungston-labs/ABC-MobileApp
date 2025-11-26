@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "abc-group-app",
-    "slug": "abc-group-app",
+    "name": "ABC",
+    "slug": "Aluva Broadband",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/adaptive-icon.png",
@@ -24,13 +24,13 @@
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "owner": "ansalt",
+    "owner": "tungstonlabs",
     "plugins": [
       "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "45c5393c-8626-49a4-a6d0-459d2a1e7069"
+        "projectId": "67cf5c4c-6a3e-4136-88b8-d905707cff9a"
       }
     }
   }

@@ -36,7 +36,7 @@ export default function LoginScreen() {
       // ✅ Pass rememberMe to loginUser
       const data = await loginUser(email, password, rememberMe);
 
-      Alert.alert("Login Success", `Welcome, ${data.user?.name || "User"}!`);
+      // Alert.alert("Login Success", `Welcome, ${data.user?.name || "User"}!`);
       navigation.navigate("HomeScreen");
     } catch (error) {
       const message =
