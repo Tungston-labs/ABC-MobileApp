@@ -119,6 +119,12 @@ userCard: {
     height:240,
     marginBottom: 20,
   },
+   imagedash: {
+    width: 200,
+    height:140,
+    marginLeft:30,
+    marginBottom: 20,
+  },
   placeholderText: {
     fontSize: 16,
     color: '#4433CC',
@@ -132,29 +138,90 @@ userCard: {
     paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 30,
+    gap:"20px",
     backgroundColor: '#FFFFFF',
   },
   drawerProfile: {
     marginTop: 20,
   },
   drawerName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#303030',
-  },
+  fontSize: 24,
+  fontWeight: 'bold',
+  marginTop: 4,
+  color: '#303030',
+  
+  paddingVertical: 10,
+  paddingHorizontal: 1,
+  borderRadius: 2, // rounded edges
+},
+
   drawerRole: {
-    fontSize: 14,
+    fontSize: 18,
     color: '#303030',
-    marginTop: 4,
+    marginTop: 8,
   },
   logoutContainer: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
+    marginTop:20,
   },
   logoutText: {
     marginLeft: 8,
+
     color: '#FD3F3F',
-    fontSize: 16,
+    fontSize: 18,
   },
+  menuSection: {
+  marginTop: 20,
+},
+
+menuItem: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+},
+
+menuText: {
+  marginLeft: 10,
+  fontSize: 16,
+  color: '#333',
+},
+
+drawerEmail: {
+  fontSize: 16,
+  color: '#777',
+  marginTop: 8,
+},
+
+divider: {
+  height: 1,
+  backgroundColor: '#ddd',
+  marginVertical: 20,
+},
+
+footer: {
+  alignItems: 'center',
+  marginBottom: 40,
+  gap: 20,  // remove "px"
+},
+
+imagefooter: {
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+imagedash: {
+  width: 120,
+  height: 120,
+},
+
+footerNote: {
+  textAlign: 'center',
+  fontSize: 16,
+  color: '#aaa',
+},
+
 });

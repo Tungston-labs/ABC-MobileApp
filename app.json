@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "ABC",
-    "slug": "Aluva Broadband",
+    "name": "Aluva Broadband",
+    "slug": "aluva-broadband",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/adaptive-icon.png",
+    "icon": "./assets/icon.svg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
@@ -13,7 +13,7 @@
     "android": {
       "package": "com.anonymous.abcgroupapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.svg",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -24,13 +24,13 @@
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "owner": "tungstonlabs",
+    "owner": "",
     "plugins": [
       "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "67cf5c4c-6a3e-4136-88b8-d905707cff9a"
+        "projectId": "d0713a53-d972-4475-ac9f-2bf731d01ee6"
       }
     }
   }

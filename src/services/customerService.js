@@ -1,19 +1,20 @@
 // services/customerService.js
 import api from './axios';
 
-export const searchCustomers = async (searchText = '') => {
+export const searchCustomers = async (searchText = '', page = 1, pageSize = 20) => {
   try {
-    const params = {};
+    const params = {
+      page,          // current page
+      page_size: pageSize, // number of results per page
+    };
+
     if (searchText) params.search = searchText;
 
-    // ✅ token will be attached automatically from AsyncStorage
     const response = await api.get('client/my-customers/search/', { params });
-
-    // console.log('Customer search response:', response.data);
-    return response.data.results;
+    return response.data.results; // array of users
   } catch (error) {
     console.error('Error fetching customers:', error.response?.data || error.message);
-    throw error;
+    return [];
   }
 };
 

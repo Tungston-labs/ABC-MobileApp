@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 
 import {
   View,
   Text,
   TextInput,
-  ScrollView,
   TouchableOpacity,
   Image,
   ActivityIndicator,
@@ -24,73 +23,85 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 // ✅ Home Screen
+const PAGE_SIZE = 20; // number of users per page
+
+// ✅ Home Screen with pagination
 const HomeScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false); // separate for pagination
   const [errorMsg, setErrorMsg] = useState('');
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [lcoName, setLcoName] = useState('');
 
   useEffect(() => {
-    const loadInitialData = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem('user');
-if (storedUser) {
-  const user = JSON.parse(storedUser);
-  setLcoName(user.lco_name || user.username || user.email || 'LCO');
-}
-
-  
-        setLoading(true);
-  
-        // ✅ Don’t pass token manually, axios.js interceptor handles it
-        const allCustomers = await searchCustomers('');
-        // console.log("Fetched customers:", allCustomers);
-  
-        if (Array.isArray(allCustomers)) {
-          setFilteredUsers(allCustomers);
-        } else {
-          setFilteredUsers([]);
-          setErrorMsg('No customers found');
-        }
-      } catch (error) {
-        console.error('Error loading customers:', error);
-        setErrorMsg('Failed to load customers');
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    loadInitialData();
+    loadUserInfo();
+    fetchUsers(1); // fetch first page
   }, []);
-  
-  const handleSearch = async (text) => {
-    setSearchText(text);
-    setErrorMsg('');
-  
-    const trimmedText = text.trim();
-  
+
+  const loadUserInfo = async () => {
     try {
-      setLoading(true);
-      const users = await searchCustomers(trimmedText);
-      if (Array.isArray(users)) {
-        setFilteredUsers(users);
-      } else {
-        setFilteredUsers([]);
-        setErrorMsg('Invalid data received from server');
+      const storedUser = await AsyncStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        setLcoName(user.lco_name || user.username || user.email || 'LCO');
       }
-    } catch (error) {
-      console.error('Search Error:', error.response?.data || error.message);
-      setFilteredUsers([]);
-      setErrorMsg('Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Failed to load user info', err);
     }
   };
-  
+
+  const fetchUsers = async (pageNumber) => {
+    if (!hasMore && pageNumber !== 1) return;
+
+    try {
+      if (pageNumber === 1) setLoading(true);
+      else setLoadingMore(true);
+
+      const response = await searchCustomers(searchText, pageNumber, PAGE_SIZE);
+
+      if (Array.isArray(response)) {
+        if (pageNumber === 1) setUsers(response);
+        else setUsers((prev) => [...prev, ...response]);
+
+        if (response.length < PAGE_SIZE) setHasMore(false);
+        else setHasMore(true);
+
+        setPage(pageNumber + 1);
+      } else {
+        if (pageNumber === 1) setUsers([]);
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.error('Fetch Error:', err);
+      if (pageNumber === 1) setUsers([]);
+      setHasMore(false);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
+
+  const handleSearch = async (text) => {
+    setSearchText(text);
+    setPage(1);
+    setHasMore(true);
+    fetchUsers(1);
+  };
+
+  const renderFooter = () => {
+    if (!loadingMore) return null;
+    return (
+      <View style={{ padding: 10 }}>
+        <ActivityIndicator size="small" color="#007bff" />
+      </View>
+    );
+  };
 
   const renderContent = () => {
-    if (loading) {
+    if (loading && page === 1) {
       return (
         <View style={styles.imageContainer}>
           <ActivityIndicator size="large" color="#007bff" />
@@ -98,7 +109,7 @@ if (storedUser) {
         </View>
       );
     }
-  
+
     if (errorMsg) {
       return (
         <View style={styles.imageContainer}>
@@ -111,26 +122,30 @@ if (storedUser) {
         </View>
       );
     }
-  
-    // ✅ Show customers if loaded
-    if (Array.isArray(filteredUsers) && filteredUsers.length > 0) {
+
+    if (Array.isArray(users) && users.length > 0) {
       return (
-        <View style={styles.listContainer}>
-          {filteredUsers.map((user, index) => (
+        <FlatList
+          data={users}
+          keyExtractor={(item, index) => index.toString()}
+          nestedScrollEnabled
+          contentContainerStyle={styles.listContainer}
+          renderItem={({ item }) => (
             <TouchableOpacity
-              key={index}
               style={styles.userItem}
-              onPress={() => navigation.navigate('UserTabs', { user })}
+              onPress={() => navigation.navigate('UserTabs', { user: item })}
             >
-              <Text style={styles.userItemName}>{user.full_name || user.name}</Text>
-              <Text style={styles.userItemPhone}>Ph: {user.phone}</Text>
+              <Text style={styles.userItemName}>{item.full_name || item.name}</Text>
+              <Text style={styles.userItemPhone}>Ph: {item.phone}</Text>
             </TouchableOpacity>
-          ))}
-        </View>
+          )}
+          onEndReached={() => fetchUsers(page)}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={renderFooter}
+        />
       );
     }
-  
-    // 🔻 Only show this when no customers at all
+
     return (
       <View style={styles.imageContainer}>
         <Image
@@ -142,10 +157,10 @@ if (storedUser) {
       </View>
     );
   };
-  
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <View style={{ flex: 1 }}>
+      {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTopRow}>
           <Image
@@ -164,6 +179,7 @@ if (storedUser) {
         </View>
       </View>
 
+      {/* Search */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={18} color="#888" style={styles.searchIcon} />
         <TextInput
@@ -178,22 +194,27 @@ if (storedUser) {
       </View>
 
       {renderContent()}
-    </ScrollView>
+    </View>
   );
 };
 
-// ✅ Drawer content with Logout
 
 
 const DrawerContent = ({ navigation }) => {
   const [lcoName, setLcoName] = useState('');
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const loadUser = async () => {
-      const storedUser = await AsyncStorage.getItem('user');
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setLcoName(user.lco_name || user.username || user.email || 'LCO');
+      try {
+        const storedUser = await AsyncStorage.getItem('user');
+        if (storedUser) {
+          const parsed = JSON.parse(storedUser);
+          setUser(parsed);
+          setLcoName(parsed.lco_name || parsed.username || 'LCO');
+        }
+      } catch (err) {
+        console.log("User loading error:", err);
       }
     };
     loadUser();
@@ -201,7 +222,7 @@ const DrawerContent = ({ navigation }) => {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.clear(); // Clear tokens & user
+      await AsyncStorage.clear();
       navigation.reset({
         index: 0,
         routes: [{ name: 'LoginScreen' }],
@@ -216,14 +237,8 @@ const DrawerContent = ({ navigation }) => {
       'Logout',
       'Are you sure you want to logout?',
       [
-        {
-          text: 'Cancel',
-          style: 'cancel', // cancels the alert
-        },
-        {
-          text: 'Yes',
-          onPress: handleLogout, // logs out
-        },
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: handleLogout },
       ],
       { cancelable: true }
     );
@@ -234,15 +249,34 @@ const DrawerContent = ({ navigation }) => {
       <View style={styles.drawerProfile}>
         <Text style={styles.drawerName}>{lcoName}</Text>
         <Text style={styles.drawerRole}>L.C.O</Text>
+        <Text style={styles.drawerEmail}>
+          {user?.username || user?.email || ''}
+        </Text>
+         <TouchableOpacity onPress={confirmLogout} style={styles.logoutContainer}>
+          <Ionicons name="log-out-outline" size={20} color="#f00" />
+          <Text style={styles.logoutText}>Log out</Text>
+        </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={confirmLogout} style={styles.logoutContainer}>
-        <Ionicons name="log-out-outline" size={20} color="#f00" />
-        <Text style={styles.logoutText}>Log out</Text>
-      </TouchableOpacity>
+
+  <View style={styles.footer}>
+  <View style={styles.imagefooter}>
+    <Image
+      source={require('../../assets/logo.png')} 
+      style={styles.imagedash}
+      resizeMode="contain"
+    />
+  </View>
+
+  <Text style={styles.footerNote}>
+    Powered by Aluva Broadband Communications
+  </Text>
+</View>
+
     </View>
   );
 };
+
 
 
 // ✅ Stack
@@ -253,7 +287,6 @@ const MainStack = () => (
   </Stack.Navigator>
 );
 
-// ✅ Drawer + Stack combo
 const RootNavigator = () => {
   return (
     <Drawer.Navigator
