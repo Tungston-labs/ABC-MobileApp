@@ -14,7 +14,7 @@ import {
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { sendOtp } from '../../services/forgotPasswordService';
-import { Ionicons } from '@expo/vector-icons'; // Back arrow icon
+import { Ionicons } from '@expo/vector-icons'; 
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('');

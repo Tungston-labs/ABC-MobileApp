@@ -18,8 +18,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    paddingTop: 40, // enough space from top but not too close
-    marginTop: -40, // shift slightly upward to balance perfectly
+    paddingTop: 40, 
+    marginTop: -40, 
   },
   logo: {
     width: width * 0.38,

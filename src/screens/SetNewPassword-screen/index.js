@@ -54,7 +54,6 @@ const SetNewPasswordScreen = () => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
         <View style={{ flex: 1 }}>
-          {/* Back Arrow */}
           <TouchableOpacity
             style={{ position: 'absolute', top: 40, left: 15, zIndex: 10 }}
             onPress={() => navigation.goBack()}
@@ -72,7 +71,6 @@ const SetNewPasswordScreen = () => {
             <Text style={styles.title}>Set new password</Text>
             <Text style={styles.subtitle}>Enter new password</Text>
 
-            {/* Password Field */}
             <View style={styles.inputContainer}>
               <View style={styles.floatingLabelContainer}>
                 <Text style={styles.floatingLabel}>Password</Text>
@@ -96,7 +94,6 @@ const SetNewPasswordScreen = () => {
               </View>
             </View>
 
-            {/* Confirm Password Field */}
             <View style={styles.inputContainer}>
               <View style={styles.floatingLabelContainer}>
                 <Text style={styles.floatingLabel}>Confirm Password</Text>

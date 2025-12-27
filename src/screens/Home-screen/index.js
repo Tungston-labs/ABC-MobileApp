@@ -22,15 +22,13 @@ import { logoutUser } from '../../services/logoutService';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-// ✅ Home Screen
-const PAGE_SIZE = 20; // number of users per page
+const PAGE_SIZE = 20; 
 
-// ✅ Home Screen with pagination
 const HomeScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false); // separate for pagination
+  const [loadingMore, setLoadingMore] = useState(false); 
   const [errorMsg, setErrorMsg] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -278,8 +276,6 @@ const DrawerContent = ({ navigation }) => {
 };
 
 
-
-// ✅ Stack
 const MainStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Home" component={HomeScreen} />

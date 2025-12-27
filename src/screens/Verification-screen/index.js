@@ -14,7 +14,7 @@ import {
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { verifyOtp } from '../../services/forgotPasswordService';
-import { Ionicons } from '@expo/vector-icons'; // For back arrow
+import { Ionicons } from '@expo/vector-icons'; 
 
 const VerificationScreen = ({ route }) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -23,18 +23,18 @@ const VerificationScreen = ({ route }) => {
   const email = route?.params?.email;
 
   const handleChange = (text, index) => {
-    // Handle paste of full OTP
+    
     if (text.length > 1) {
       const newOtp = text.split('').slice(0, 6);
       while (newOtp.length < 6) newOtp.push('');
       setOtp(newOtp);
-      // Fill each input box correctly
+      
       newOtp.forEach((digit, idx) => {
         if (inputs.current[idx]) {
           inputs.current[idx].setNativeProps({ text: digit });
         }
       });
-      // Focus next empty input or last input
+     
       const nextIndex = newOtp.findIndex((val) => val === '');
       if (nextIndex !== -1) {
         inputs.current[nextIndex].focus();
@@ -44,14 +44,14 @@ const VerificationScreen = ({ route }) => {
       return;
     }
 
-    // Allow only digits
+    
     if (!/^\d*$/.test(text)) return;
 
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
 
-    // Move to next input if text entered
+    
     if (text && index < otp.length - 1) {
       inputs.current[index + 1].focus();
     }

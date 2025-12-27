@@ -41,8 +41,6 @@ const UserHeader = ({
           </View>
         </View>
 
-
-
         {/* Tabs */}
         <View style={styles.tabsContainer}>
           {tabs.map((tab) => {

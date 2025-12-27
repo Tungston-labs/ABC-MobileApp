@@ -26,15 +26,15 @@ const UserProfileScreen = ({ navigation }) => {
     if (isEditing) {
       try {
         const updatedUser = await updateCustomer(user.id, formData);
-        setFormData(updatedUser);  // update state
-        setIsEditing(false);       // exit edit mode
+        setFormData(updatedUser);  
+        setIsEditing(false);      
         Alert.alert('Success', 'Changes saved successfully.');
       } catch (error) {
         console.error('Error updating customer:', error.response?.data || error.message);
         Alert.alert('Error', 'Failed to save changes.');
       }
     } else {
-      setIsEditing(true); // enter edit mode
+      setIsEditing(true); 
     }
   };
 
@@ -146,7 +146,7 @@ const UserProfileScreen = ({ navigation }) => {
       contentContainerStyle={styles.formContainer}
       showsVerticalScrollIndicator={false}
       enableOnAndroid={true}
-      extraScrollHeight={20} // small gap above keyboard
+      extraScrollHeight={20} 
     >
       
       <ScrollView

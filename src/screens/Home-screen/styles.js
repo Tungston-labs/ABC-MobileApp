@@ -31,7 +31,7 @@ headerTopRow: {
 },
 
 logo: {
-  width: 40, // Adjust size as needed
+  width: 40, 
   height: 40,
 },
 
@@ -47,9 +47,9 @@ userCard: {
   padding: 10,
   elevation: 20,
  
-  // iOS shadow
+
   shadowColor: '#000',
-  shadowOffset: { width: 3, height: 3 }, // right (x), bottom (y)
+  shadowOffset: { width: 3, height: 3 }, 
   shadowOpacity: 0.3,
   shadowRadius: 4,
 },

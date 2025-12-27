@@ -5,7 +5,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     name: '',
-    avatar: '', // ✅ Must define avatar here
+    avatar: '', 
   },
   reducers: {
     setUser: (state, action) => {

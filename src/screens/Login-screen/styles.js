@@ -61,7 +61,7 @@ export default StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   passwordInput: {
-    paddingRight: 45, // space for eye icon inside
+    paddingRight: 45, 
   },
   eyeIconInside: {
     position: 'absolute',

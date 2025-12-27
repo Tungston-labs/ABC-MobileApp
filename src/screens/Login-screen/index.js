@@ -22,7 +22,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false); // ✅ Remember Me state
+  const [rememberMe, setRememberMe] = useState(false); 
   const navigation = useNavigation();
 
   const handleLogin = async () => {
@@ -33,11 +33,11 @@ export default function LoginScreen() {
 
     setLoading(true);
     try {
-      // ✅ Pass rememberMe to loginUser
+      
       const data = await loginUser(email, password, rememberMe);
 
       // Alert.alert("Login Success", `Welcome, ${data.user?.name || "User"}!`);
-      navigation.navigate("HomeScreen");
+      navigation.navigate("DashboardScreen");
     } catch (error) {
       const message =
         error.response?.data?.detail ||
@@ -103,7 +103,6 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          {/* ✅ Remember Me Switch */}
           <View style={styles.rememberMeContainer}>
             <Switch
               value={rememberMe}

@@ -24,7 +24,7 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
   },
   logo: {
-    width: width * 0.35, // Increased size
+    width: width * 0.35, 
     height: width * 0.35,
     marginBottom: 30,
   },

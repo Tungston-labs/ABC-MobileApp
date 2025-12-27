@@ -19,13 +19,13 @@ export default StyleSheet.create({
 
   scrollContent: {
     flex: 1,
-    paddingTop: 380, // Adjust to match actual header height
+    paddingTop: 380, 
   },
 
   formContainer: {
     paddingHorizontal: 16,
     paddingBottom: 30,
-    paddingTop: 16, // small padding instead of 400
+    paddingTop: 16, 
   },
   
 
