@@ -10,7 +10,8 @@ export default StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "rgba(225, 230, 238, 0.95)",
+     backgroundColor: "rgb(231, 243, 250)",
+   
   },
 
   header: {
@@ -24,8 +25,7 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 44,
     borderBottomRightRadius: 44,
   },
-
-
+  
   logo: {
     width: 60,
     height: 50,
@@ -38,8 +38,8 @@ export default StyleSheet.create({
   headerTitle: {
     color: "#FFFFFF",
     fontSize: 30,
-    fontWeight: "600",
     marginLeft: 15,
+    fontFamily: "Lato_700Bold",
   },
 
   content: {

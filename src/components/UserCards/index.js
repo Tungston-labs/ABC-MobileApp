@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, LayoutAnimation, Platform, UIManager } fr
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./style";
 
-// Enable animation for Android
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -18,10 +17,6 @@ export default function UserCard({ index, title, data }) {
 
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={toggleExpand} style={styles.card}>
-      {/* Serial Number */}
-      <View style={styles.serialBox}>
-        <Text style={styles.serialText}>{index + 1}</Text>
-      </View>
 
       {/* Header */}
       <View style={styles.header}>
@@ -30,11 +25,10 @@ export default function UserCard({ index, title, data }) {
         <Ionicons
           name={expanded ? "chevron-up" : "chevron-down"}
           size={22}
-          color="#333"
+          color="#000"
         />
       </View>
 
-      {/* Content (Expandable) */}
       {expanded && (
         <View style={styles.content}>
           {Object.entries(data).map(([key, value]) => (

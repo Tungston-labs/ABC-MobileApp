@@ -27,7 +27,7 @@ export default function DashboardScreen() {
   return (
     <>
       <ImageBackground
-        source={require("../../assets/dashboard-bg.png")}
+        source={require("../../assets/Home1.png")}
         style={styles.bgImage}
         resizeMode="cover"
       >
@@ -44,7 +44,7 @@ export default function DashboardScreen() {
 
             {/* MENU ICON */}
             <TouchableOpacity onPress={() => setMenuVisible(true)}>
-              <Ionicons name="menu" size={28} color="#fff" />
+              <Ionicons name="menu" size={28} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
 

@@ -30,7 +30,7 @@ export default function SwitchesScreen() {
 
     },
     {
-       title: "MILLUPADY",
+      title: "MILLUPADY",
       data: {
         UID: "ABC-01",
         Make: "CISCO",
@@ -54,7 +54,7 @@ export default function SwitchesScreen() {
 
     },
     {
-       title: "KOCHINBANK",
+      title: "KOCHINBANK",
       data: {
         UID: "ABC-01",
         Make: "CISCO",
@@ -71,19 +71,26 @@ export default function SwitchesScreen() {
     <View style={styles.container}>
       <CommonHeader title="Switches Details" />
 
-      <FlatList
-        data={switchesData}
-        keyExtractor={(_, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item, index }) => (
-          <UserCard
-            index={index}
-            title={item.title}
-            data={item.data}
-          />
-        )}
-      />
+      <ImageBackground
+        source={require("../../assets/Home1.png")}
+        style={styles.bgImage}
+        resizeMode="cover"
+      >
+
+        <FlatList
+          data={switchesData}
+          keyExtractor={(_, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item, index }) => (
+            <UserCard
+              index={index}
+              title={item.title}
+              data={item.data}
+            />
+          )}
+        />
+      </ImageBackground>
     </View>
   );
 }

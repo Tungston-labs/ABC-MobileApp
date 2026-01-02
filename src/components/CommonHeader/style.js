@@ -26,7 +26,7 @@ export default StyleSheet.create({
   searchBox: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#fff",
     borderRadius: 12,
     paddingHorizontal: 14,
     height: 42,
@@ -36,6 +36,6 @@ export default StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     fontSize: 14,
-    color: "#000",
+    color: "#000000",
   },
 });

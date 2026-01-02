@@ -2,29 +2,11 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#E3E3E3",
     borderRadius: 16,
     padding: 16,
     marginBottom: 18,
     elevation: 4,
-  },
-
-  serialBox: {
-    position: "absolute",
-    top: -12,
-    left: -12,
-    width: 24,
-    height: 24,
-    borderRadius: 17,
-    backgroundColor: "#83B1C9",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 10,
-  },
-
-  serialText: {
-    color: "#fff",
-    fontWeight: "700",
   },
 
   header: {

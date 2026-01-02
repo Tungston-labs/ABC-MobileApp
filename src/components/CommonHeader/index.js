@@ -22,10 +22,10 @@ export default function CommonHeader({ title, onSearch }) {
 
         {/* SEARCH */}
         <View style={styles.searchBox}>
-          <Ionicons name="search" size={18} color="#777" />
+          <Ionicons name="search" size={18} color="#83B1C9" />
           <TextInput
-            placeholder="Search..."
-            placeholderTextColor="#777"
+            placeholder="Search ..."
+            placeholderTextColor="#83B1C9"
             style={styles.searchInput}
             onChangeText={onSearch}
           />
