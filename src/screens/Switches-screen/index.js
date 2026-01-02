@@ -7,9 +7,8 @@ import styles from "./style";
 export default function SwitchesScreen() {
   const switchesData = [
     {
-      title: "Switches",
+      title: "ALUVA CORE",
       data: {
-        Name: "ALUVA CORE	",
         UID: "ABC-01",
         Make: "CISCO",
         "Model Number": "SG550X",
@@ -19,22 +18,8 @@ export default function SwitchesScreen() {
       },
     },
     {
-     title: "Switches",
+      title: "UC COLLEGE",
       data: {
-        Name: "ALUVA CORE	",
-        UID: "ABC-01",
-        Make: "CISCO",
-        "Model Number": "SG550X",
-        "Serial Number": "DNI214307CQ",
-        "Package Date": "12-01-2024",
-        "Unique ID": "SW001",
-      },
-
-    },
-    {
-      title: "Switches",
-      data: {
-        Name: "ALUVA CORE	",
         UID: "ABC-01",
         Make: "CISCO",
         "Model Number": "SG550X",
@@ -45,9 +30,8 @@ export default function SwitchesScreen() {
 
     },
     {
-      title: "Switches",
+       title: "MILLUPADY",
       data: {
-        Name: "ALUVA CORE	",
         UID: "ABC-01",
         Make: "CISCO",
         "Model Number": "SG550X",
@@ -58,9 +42,20 @@ export default function SwitchesScreen() {
 
     },
     {
-      title: "Switches",
+      title: "ALUVA PALACE",
       data: {
-        Name: "ALUVA CORE	",
+        UID: "ABC-01",
+        Make: "CISCO",
+        "Model Number": "SG550X",
+        "Serial Number": "DNI214307CQ",
+        "Package Date": "12-01-2024",
+        "Unique ID": "SW001",
+      },
+
+    },
+    {
+       title: "KOCHINBANK",
+      data: {
         UID: "ABC-01",
         Make: "CISCO",
         "Model Number": "SG550X",

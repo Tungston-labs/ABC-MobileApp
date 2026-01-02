@@ -33,9 +33,18 @@ export default function DashboardScreen() {
       >
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Dashboard</Text>
+            {/* LEFT SIDE – LOGO + TITLE */}
+            <View>
+              <Image
+                source={require("../../assets/logo.png")}
+                style={styles.logo}
+              />
+              <Text style={styles.headerTitle}>Dashboard</Text>
+            </View>
+
+            {/* MENU ICON */}
             <TouchableOpacity onPress={() => setMenuVisible(true)}>
-              <Ionicons name="menu" size={28} color="#000" />
+              <Ionicons name="menu" size={28} color="#fff" />
             </TouchableOpacity>
           </View>
 
@@ -74,5 +83,3 @@ export default function DashboardScreen() {
     </>
   );
 }
-
-

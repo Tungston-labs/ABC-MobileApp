@@ -13,12 +13,13 @@ export default StyleSheet.create({
     position: "absolute",
     top: -12,
     left: -12,
-    width: 34,
-    height: 34,
+    width: 24,
+    height: 24,
     borderRadius: 17,
     backgroundColor: "#83B1C9",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 10,
   },
 
   serialText: {
@@ -26,32 +27,38 @@ export default StyleSheet.create({
     fontWeight: "700",
   },
 
-  content: {
-    marginTop: 6,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingRight: 4,
   },
 
   title: {
     fontSize: 16,
     fontWeight: "700",
-    marginBottom: 10,
     color: "#222",
+  },
+
+  content: {
+    marginTop: 14,
   },
 
   row: {
     flexDirection: "row",
-    marginBottom: 6,
+    marginBottom: 8,
   },
 
   label: {
     width: 120,
     fontSize: 13,
-    color: "#000000",
+    color: "#000",
     fontWeight: "600",
   },
 
   value: {
     flex: 1,
     fontSize: 13,
-    color: "#000000",
+    color: "#000",
   },
 });

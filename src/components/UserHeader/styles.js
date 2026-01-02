@@ -93,4 +93,11 @@ export default StyleSheet.create({
     color: '#000000',
     fontSize: 16,
   },
+  hamburger: {
+  position: "absolute",
+  top: 40,
+  right: 16,
+  zIndex: 20,
+},
+
 });

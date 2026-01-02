@@ -25,10 +25,21 @@ export default StyleSheet.create({
     borderBottomRightRadius: 44,
   },
 
+
+  logo: {
+    width: 60,
+    height: 50,
+    resizeMode: "contain",
+    marginBottom: 16,
+    marginLeft: 15,
+    marginTop: -60,
+  },
+
   headerTitle: {
     color: "#FFFFFF",
-    fontSize: 25,
-    fontWeight: "700",
+    fontSize: 30,
+    fontWeight: "600",
+    marginLeft: 15,
   },
 
   content: {
@@ -42,17 +53,15 @@ export default StyleSheet.create({
     justifyContent: "space-between",
   },
 
-  /* CARD */
   box: {
     marginTop: 25,
     width: BOX_SIZE,
     height: BOX_SIZE,
     backgroundColor: "#eee",
     borderRadius: 28,
-
     alignItems: "center",
-    paddingTop: 38,          
-    paddingBottom: 34,       
+    paddingTop: 38,
+    paddingBottom: 34,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
@@ -60,7 +69,6 @@ export default StyleSheet.create({
     elevation: 13,
   },
 
-  /* COUNT – TOP LEFT */
   countText: {
     position: "absolute",
     top: 16,
@@ -70,7 +78,6 @@ export default StyleSheet.create({
     color: "#83B1C9",
   },
 
-  /* ICON */
   iconWrapper: {
     width: 72,
     height: 72,
@@ -79,7 +86,6 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 12,
-
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.12,
@@ -93,7 +99,6 @@ export default StyleSheet.create({
     resizeMode: "contain",
   },
 
-  /* TITLE */
   boxText: {
     fontSize: 17,
     fontWeight: "800",
@@ -102,7 +107,6 @@ export default StyleSheet.create({
     marginTop: 4,
   },
 
-  /* ARROW – BOTTOM RIGHT */
   arrowWrapper: {
     position: "absolute",
     bottom: 14,
@@ -113,7 +117,6 @@ export default StyleSheet.create({
     backgroundColor: "#83B1C9",
     justifyContent: "center",
     alignItems: "center",
-
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,

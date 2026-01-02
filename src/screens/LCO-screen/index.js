@@ -7,9 +7,8 @@ import styles from "./style";
 export default function LCOScreen() {
   const lcoData = [
     {
-      title: "LCO",
+      title: "Santhosh KD",
       data: {
-        Name: "Santhosh KD",
         Address	: "Womens Hostel Road UC college ALUVA",
         "Networking Name ": "ACME CABLE TV	",
         "Adhar number	": "801822849302",
@@ -20,23 +19,8 @@ export default function LCOScreen() {
       },
     },
     {
-      title: "LCO",
+      title: "Reena Maria",
       data: {
-        Name: "Santhosh KD",
-        Address	: "Womens Hostel Road UC college ALUVA",
-        "Networking Name ": "ACME CABLE TV	",
-        "Adhar number	": "801822849302",
-        "Phone Number": "9247574780",
-        "Email": "santhoshaluva@gmail.com",
-        OLT: "ACE/12, ACE/26	",
-        "Unique ID	": "LCO002",
-      },
-
-    },
-    {
-      title: "LCO",
-      data: {
-        Name: "Santhosh KD",
         Address	: "Womens Hostel Road UC college ALUVA",
         "Networking Name ": "ACME CABLE TV	",
         "Adhar number	": "801822849302",
@@ -48,9 +32,21 @@ export default function LCOScreen() {
 
     },
     {
-      title: "LCO",
+      title: "Ajith Kumar",
       data: {
-        Name: "Santhosh KD",
+        Address	: "Womens Hostel Road UC college ALUVA",
+        "Networking Name ": "ACME CABLE TV	",
+        "Adhar number	": "801822849302",
+        "Phone Number": "9247574780",
+        "Email": "santhoshaluva@gmail.com",
+        OLT: "ACE/12, ACE/26	",
+        "Unique ID	": "LCO002",
+      },
+
+    },
+    {
+      title: "Krishnan Nair",
+      data: {
         Address	: "Womens Hostel Road UC college ALUVA",
         "Networking Name ": "ACME CABLE TV	",
         "Adhar number	": "801822849302",

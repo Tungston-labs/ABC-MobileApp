@@ -7,15 +7,22 @@ import styles from "./style";
 export default function ISPScreen() {
   const oltData = [
     {
-      title: "ISP",
+      title: "KERALA VISION",
       data: {
-        "ISP Name": "KERALA VISION",
         "ISP Address": "ERNAKULAM",
         "Unique ID": "ALUVA",
       },
     },
     {
-     title: "ISP",
+     title: "Hrishikesh S",
+      data: {
+        "ISP Address": "ERNAKULAM",
+        "Unique ID": "ALUVA",
+      },
+
+    },
+    {
+      title: "Eshwar ",
       data: {
         "ISP Name": "KERALA VISION",
         "ISP Address": "ERNAKULAM",
@@ -24,27 +31,16 @@ export default function ISPScreen() {
 
     },
     {
-      title: "ISP",
+      title: "Hrishikesh S",
       data: {
-        "ISP Name": "KERALA VISION",
         "ISP Address": "ERNAKULAM",
         "Unique ID": "ALUVA",
       },
 
     },
     {
-      title: "ISP",
+     title: "Hrishikesh S",
       data: {
-        "ISP Name": "KERALA VISION",
-        "ISP Address": "ERNAKULAM",
-        "Unique ID": "ALUVA",
-      },
-
-    },
-    {
-      title: "ISP",
-      data: {
-        "ISP Name": "KERALA VISION",
         "ISP Address": "ERNAKULAM",
         "Unique ID": "ALUVA",
       },

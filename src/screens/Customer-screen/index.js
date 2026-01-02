@@ -7,9 +7,8 @@ import styles from "./style";
 export default function CustomerScreen() {
   const customerData = [
     {
-      title: "Customer",
+      title: "Nikhil Antony",
       data: {
-        Name: "meena rajan",
         "Ph number": "919074061253",
         "username": "pvcmmeenarajan",
         "Email ID	": "vijaycablevision@gmail.com",
@@ -19,9 +18,8 @@ export default function CustomerScreen() {
       },
     },
     {
-      title: "Customer",
+      title: "UTHAMAN N A",
       data: {
-        Name: "Elsy Paulose	",
         "Ph number": "919074061253",
         "username": "pvcmmeenarajan",
         "Email ID	": "vijaycablevision@gmail.com",
@@ -31,9 +29,8 @@ export default function CustomerScreen() {
 
     },
     {
-      title: "Customer",
+      title: "AFSAL V I",
       data: {
-        Name: "Suresh C R	",
         "Ph number": "919074061253",
         "username": "pvcmmeenarajan",
         "Email ID	": "vijaycablevision@gmail.com",
@@ -43,9 +40,19 @@ export default function CustomerScreen() {
 
     },
     {
-      title: "Customer",
+      title: "Akhil N S",
       data: {
-        Name: "Beena Rahim	",
+        "Ph number": "919074061253",
+        "username": "pvcmmeenarajan",
+        "Email ID	": "vijaycablevision@gmail.com",
+        "LCO": "Venugopal KV	",
+        "Plan Exp": "2025-12-07",
+      },
+
+    },
+    {
+      title: "Reena p s",
+      data: {
         "Ph number": "919074061253",
         "username": "pvcmmeenarajan",
         "Email ID	": "vijaycablevision@gmail.com",

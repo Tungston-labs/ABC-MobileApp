@@ -7,53 +7,67 @@ import styles from "./style";
 export default function PlanExpiry() {
   const planExpiryData = [
     {
-      title: "OLT Alpha",
+      title: "Akshaykumar T S",
       data: {
-        "Full Name": "KV JACOB	",
-        LCO: "OLT-001",
+        LCO: "Abdul Latheef KK",
         "Phone number	": "7736135824",
-        "Address": "KALATHIPARAMBIL,GANDHINAGAR",
+        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
         "Last Updated": "12/4/2025, 2:36:01 PM",
         "Plan expiry date": "2025-12-26",
-        
       },
     },
     {
-      title: "OLT Alpha",
+      title: "Suresh K C	",
       data: {
-        "Full Name": "KV JACOB	",
-        LCO: "OLT-001",
+        LCO: "Abdul Latheef KK",
         "Phone number	": "7736135824",
-        "Address": "1/47-A PALIYAPADATH BUILDING GANDHI NAGAR COLONY",
+        "Address": "Kunnasserypallam (Vaniyappilly),Aluva N/A N/A Ernakulam,Kunnathunad,ERNAKULAM,Kerala-683105",
         "Last Updated": "12/4/2025, 2:36:01 PM",
         "Plan expiry date": "2025-12-26",
-        
       },
 
     },
     {
-      title: "OLT Alpha",
+     title: "Rajendran Nair",
       data: {
-        "Full Name": "KV JACOB	",
-        LCO: "OLT-001",
+        LCO: "Abdul Latheef KK",
         "Phone number	": "7736135824",
-        "Address": "Kuliya House, Thuruthiyil Lane, Aluva, 683101.",
+        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
         "Last Updated": "12/4/2025, 2:36:01 PM",
         "Plan expiry date": "2025-12-26",
-        
       },
 
     },
     {
-      title: "OLT Alpha",
+      title: "Harishankaran P K",
       data: {
-        "Full Name": "KV JACOB	",
-        LCO: "OLT-001",
+        LCO: "Abdul Latheef KK",
         "Phone number	": "7736135824",
-        "Address": "KALATHIPARAMBIL,GANDHINAGAR",
+        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
         "Last Updated": "12/4/2025, 2:36:01 PM",
         "Plan expiry date": "2025-12-26",
-        
+      },
+
+    },
+    {
+      title: "Lekshmi Nair",
+      data: {
+        LCO: "Abdul Latheef KK",
+        "Phone number	": "7736135824",
+        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
+        "Last Updated": "12/4/2025, 2:36:01 PM",
+        "Plan expiry date": "2025-12-26",
+      },
+
+    },
+    {
+      title: "Vishnu S",
+      data: {
+        LCO: "Abdul Latheef KK",
+        "Phone number	": "7736135824",
+        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
+        "Last Updated": "12/4/2025, 2:36:01 PM",
+        "Plan expiry date": "2025-12-26",
       },
 
     },

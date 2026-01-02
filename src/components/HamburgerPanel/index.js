@@ -20,18 +20,13 @@ export default function HamburgerPanel({ visible, onClose }) {
   const [logoutVisible, setLogoutVisible] = useState(false);
 
   useEffect(() => {
-    if (visible) {
-      Animated.timing(slideAnim, {
-        toValue: width / 2,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    } else {
-      Animated.timing(slideAnim, {
-        toValue: width,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
+    Animated.timing(slideAnim, {
+      toValue: visible ? width / 2 : width,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
+    if (!visible) {
       setActiveItem(null);
     }
   }, [visible]);
@@ -54,7 +49,6 @@ export default function HamburgerPanel({ visible, onClose }) {
         <TouchableOpacity style={styles.overlay} onPress={onClose} />
 
         <Animated.View style={[styles.panel, { left: slideAnim }]}>
-          {/* Header */}
           <View style={styles.topSection}>
             <View>
               <Text style={styles.name}>Ajay kumar</Text>
@@ -66,14 +60,12 @@ export default function HamburgerPanel({ visible, onClose }) {
             </TouchableOpacity>
           </View>
 
-          {/* TERMS */}
           <TouchableOpacity
             style={[
               styles.menuItem,
               activeItem === "TermsAndConditions" && styles.activeItem,
             ]}
             onPress={handleTermsNavigation}
-            activeOpacity={0.8}
           >
             <Text
               style={[
@@ -85,14 +77,12 @@ export default function HamburgerPanel({ visible, onClose }) {
             </Text>
           </TouchableOpacity>
 
-          {/* PRIVACY */}
           <TouchableOpacity
             style={[
               styles.menuItem,
               activeItem === "PrivacyPolicy" && styles.activeItem,
             ]}
             onPress={handlePrivacyNavigation}
-            activeOpacity={0.8}
           >
             <Text
               style={[
@@ -104,7 +94,6 @@ export default function HamburgerPanel({ visible, onClose }) {
             </Text>
           </TouchableOpacity>
 
-          {/* LOGOUT */}
           <TouchableOpacity
             style={styles.logout}
             onPress={() => setLogoutVisible(true)}
@@ -115,13 +104,7 @@ export default function HamburgerPanel({ visible, onClose }) {
         </Animated.View>
       </Modal>
 
-      {/* LOGOUT CONFIRMATION MODAL */}
-      <Modal
-        transparent
-        visible={logoutVisible}
-        animationType="fade"
-        statusBarTranslucent
-      >
+      <Modal transparent visible={logoutVisible} animationType="fade">
         <View style={styles.logoutOverlay}>
           <View style={styles.logoutBox}>
             <Text style={styles.logoutTitle}>Logout</Text>
@@ -137,14 +120,11 @@ export default function HamburgerPanel({ visible, onClose }) {
                 <Text style={styles.noText}>No</Text>
               </TouchableOpacity>
 
-              
               <TouchableOpacity
                 style={[styles.logoutBtn, styles.yesBtn]}
                 onPress={() => {
                   setLogoutVisible(false);
                   onClose();
-
-                
                   navigation.reset({
                     index: 0,
                     routes: [{ name: "LoginScreen" }],
