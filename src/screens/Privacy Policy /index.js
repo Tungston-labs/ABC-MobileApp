@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* MAIN TITLE */}
+       
         <Text style={styles.title}>ABC Broadband – Privacy Policy</Text>
 
         <Text style={styles.heading}>1. Introduction</Text>

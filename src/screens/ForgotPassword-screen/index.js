@@ -47,7 +47,7 @@ const ForgotPasswordScreen = () => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
         <View style={{ flex: 1 }}>
-          {/* Back Arrow */}
+          
           <TouchableOpacity
             style={{ position: 'absolute', top: 50, left: 15, zIndex: 10 }}
             onPress={() => navigation.goBack()}

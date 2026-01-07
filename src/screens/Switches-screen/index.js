@@ -68,15 +68,9 @@ export default function SwitchesScreen() {
   ];
 
   return (
-    <View style={styles.container}>
-      <CommonHeader title="Switches Details" />
-
-      <ImageBackground
-        source={require("../../assets/Home1.png")}
-        style={styles.bgImage}
-        resizeMode="cover"
-      >
-
+      <View style={styles.container}>
+        <CommonHeader title="Switches Details" />
+  
         <FlatList
           data={switchesData}
           keyExtractor={(_, index) => index.toString()}
@@ -90,8 +84,7 @@ export default function SwitchesScreen() {
             />
           )}
         />
-      </ImageBackground>
-    </View>
-  );
-}
-
+      </View>
+    );
+  }
+  

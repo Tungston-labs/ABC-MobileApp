@@ -106,7 +106,7 @@ userCard: {
     color: '#464646',
     marginTop: 4,
   },
-  // Dynamic image section
+  
   imageContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -131,7 +131,6 @@ userCard: {
     fontStyle: 'italic',
   },
 
-  // Drawer Screen (if used in DrawerContent)
   drawerContainer: {
     flex: 1,
     justifyContent: 'space-between',
@@ -152,7 +151,7 @@ userCard: {
   
   paddingVertical: 10,
   paddingHorizontal: 1,
-  borderRadius: 2, // rounded edges
+  borderRadius: 2, 
 },
 
   drawerRole: {
@@ -205,7 +204,7 @@ divider: {
 footer: {
   alignItems: 'center',
   marginBottom: 40,
-  gap: 20,  // remove "px"
+  gap: 20,  
 },
 
 imagefooter: {

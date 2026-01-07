@@ -36,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     loadUserInfo();
-    fetchUsers(1); // fetch first page
+    fetchUsers(1); 
   }, []);
 
   const loadUserInfo = async () => {
