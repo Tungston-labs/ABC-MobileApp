@@ -1,8 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE_URL = 'http://178.248.112.16:8000/api/'; // Replace with your LAN IP if testing on device/emulator
-// const BASE_URL = 'http://192.168.29.158:8000/api/'; // Replace with your LAN IP if testing on device/emulator
+const BASE_URL = 'https://api.aluvabroadband.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -11,10 +10,15 @@ const api = axios.create({
 
 // Attach token before every request
 api.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  const token = await AsyncStorage.getItem('accessToken');
+  if (!token) {
+    // No token yet (user not logged in), skip attaching Authorization
+    return config; 
+  }
+  config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+
 
 // Handle 401s with token refresh
 api.interceptors.response.use(
@@ -25,23 +29,26 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      try {
-        const refreshToken = await AsyncStorage.getItem('refreshToken');
-        if (!refreshToken) throw new Error('No refresh token found');
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        console.log('No refresh token found. Skipping token refresh.');
+        return Promise.reject(error); // Don't try refresh if token doesn't exist
+      }
 
+      try {
         const res = await axios.post(`${BASE_URL}auth/token/refresh/`, {
           refresh: refreshToken,
         });
 
         const { access, refresh } = res.data;
-        await AsyncStorage.setItem('token', access);
+        await AsyncStorage.setItem('accessToken', access);
         await AsyncStorage.setItem('refreshToken', refresh);
 
         originalRequest.headers.Authorization = `Bearer ${access}`;
         return api(originalRequest);
       } catch (refreshError) {
-        console.error('Token refresh failed:', refreshError);
-        await AsyncStorage.removeItem('token');
+        // console.error('Token refresh failed:', refreshError);
+        await AsyncStorage.removeItem('accessToken');
         await AsyncStorage.removeItem('refreshToken');
         return Promise.reject(refreshError);
       }
@@ -50,5 +57,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 export default api;

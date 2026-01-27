@@ -31,7 +31,7 @@ headerTopRow: {
 },
 
 logo: {
-  width: 40, // Adjust size as needed
+  width: 40, 
   height: 40,
 },
 
@@ -40,17 +40,20 @@ menuIcon: {
   padding: 8,
 },
 
-  userCard: {
-    marginTop: 40,
-    backgroundColor: '#83B1C9',
-    borderRadius: 10,
-    padding: 10,
-    elevation: 2,
-    shadowColor: '#E8E8E8',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
+userCard: {
+  marginTop: 40,
+  backgroundColor: '#83B1C9',
+  borderRadius: 10,
+  padding: 10,
+  elevation: 20,
+ 
+
+  shadowColor: '#000',
+  shadowOffset: { width: 3, height: 3 }, 
+  shadowOpacity: 0.3,
+  shadowRadius: 4,
+},
+
   userName: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -91,7 +94,7 @@ menuIcon: {
     padding: 15,
     borderRadius: 10,
     marginBottom: 12,
-    elevation: 1,
+    elevation: 10,
   },
   userItemName: {
     fontSize: 15,
@@ -103,7 +106,7 @@ menuIcon: {
     color: '#464646',
     marginTop: 4,
   },
-  // Dynamic image section
+  
   imageContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -112,8 +115,14 @@ menuIcon: {
     paddingHorizontal: 20,
   },
   image: {
-    width: 280,
-    height: 220,
+    width: 300,
+    height:240,
+    marginBottom: 20,
+  },
+   imagedash: {
+    width: 200,
+    height:140,
+    marginLeft:30,
     marginBottom: 20,
   },
   placeholderText: {
@@ -122,36 +131,96 @@ menuIcon: {
     fontStyle: 'italic',
   },
 
-  // Drawer Screen (if used in DrawerContent)
   drawerContainer: {
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 30,
+    gap:"20px",
     backgroundColor: '#FFFFFF',
   },
   drawerProfile: {
     marginTop: 20,
   },
   drawerName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#303030',
-  },
+  fontSize: 24,
+  fontWeight: 'bold',
+  marginTop: 4,
+  color: '#303030',
+  
+  paddingVertical: 10,
+  paddingHorizontal: 1,
+  borderRadius: 2, 
+},
+
   drawerRole: {
-    fontSize: 14,
+    fontSize: 18,
     color: '#303030',
-    marginTop: 4,
+    marginTop: 8,
   },
   logoutContainer: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
+    marginTop:20,
   },
   logoutText: {
     marginLeft: 8,
+
     color: '#FD3F3F',
-    fontSize: 16,
+    fontSize: 18,
   },
+  menuSection: {
+  marginTop: 20,
+},
+
+menuItem: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+},
+
+menuText: {
+  marginLeft: 10,
+  fontSize: 16,
+  color: '#333',
+},
+
+drawerEmail: {
+  fontSize: 16,
+  color: '#777',
+  marginTop: 8,
+},
+
+divider: {
+  height: 1,
+  backgroundColor: '#ddd',
+  marginVertical: 20,
+},
+
+footer: {
+  alignItems: 'center',
+  marginBottom: 40,
+  gap: 20,  
+},
+
+imagefooter: {
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+imagedash: {
+  width: 120,
+  height: 120,
+},
+
+footerNote: {
+  textAlign: 'center',
+  fontSize: 16,
+  color: '#aaa',
+},
+
 });

@@ -19,13 +19,15 @@ export default StyleSheet.create({
 
   scrollContent: {
     flex: 1,
-    paddingTop: 380, // Adjust to match actual header height
+    paddingTop: 380, 
   },
 
   formContainer: {
     paddingHorizontal: 16,
     paddingBottom: 30,
+    paddingTop: 16, 
   },
+  
 
   inputGroup: {
     marginBottom: 16,
@@ -34,6 +36,7 @@ export default StyleSheet.create({
     fontSize: 14,
     color: '#484848',
     marginBottom: 4,
+    marginLeft:12,
   },
   input: {
     backgroundColor: '#E3E3E3',
@@ -41,6 +44,7 @@ export default StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 8,
     color: '#000000',
+    elevation: 15,
   },
   addressInput: {
     textAlignVertical: 'top',

@@ -24,7 +24,7 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
   },
   logo: {
-    width: width * 0.35, // Increased size
+    width: width * 0.35, 
     height: width * 0.35,
     marginBottom: 30,
   },
@@ -49,7 +49,7 @@ export default StyleSheet.create({
   },
   
   otpInput: {
-    width: 30,
+    width: 50,
     height: 50,
     borderWidth: 1.5,
     borderColor: '#83B1C9',
@@ -57,7 +57,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     color: '#000',
-    marginHorizontal: 5
+    marginHorizontal: 2,
   },
   button: {
     backgroundColor: '#83B1C9',

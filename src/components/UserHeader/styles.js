@@ -27,6 +27,7 @@ export default StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     position: 'relative',
+    elevation: 19,
   },
   profileName: {
     fontSize: 22,
@@ -92,4 +93,11 @@ export default StyleSheet.create({
     color: '#000000',
     fontSize: 16,
   },
+  hamburger: {
+  position: "absolute",
+  top: 40,
+  right: 16,
+  zIndex: 20,
+},
+
 });
