@@ -1,0 +1,6 @@
+module Pods_abcgroupapp {
+  umbrella header "Pods-abcgroupapp-umbrella.h"
+
+  export *
+  module * { export * }
+}
