@@ -1,90 +1,88 @@
-import React from "react";
-import { View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, FlatList, ActivityIndicator } from "react-native";
 import UserCard from "../../components/UserCards";
 import CommonHeader from "../../components/CommonHeader";
 import styles from "./style";
+import { getAllSwitches } from "../../services/switcheService";
 
 export default function SwitchesScreen() {
-  const switchesData = [
-    {
-      title: "ALUVA CORE",
-      data: {
-        UID: "ABC-01",
-        Make: "CISCO",
-        "Model Number": "SG550X",
-        "Serial Number": "DNI214307CQ",
-        "Package Date": "12-01-2024",
-        "Unique ID": "SW001",
-      },
-    },
-    {
-      title: "UC COLLEGE",
-      data: {
-        UID: "ABC-01",
-        Make: "CISCO",
-        "Model Number": "SG550X",
-        "Serial Number": "DNI214307CQ",
-        "Package Date": "12-01-2024",
-        "Unique ID": "SW001",
-      },
+  const [switches, setSwitches] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [search, setSearch] = useState("");
 
-    },
-    {
-      title: "MILLUPADY",
-      data: {
-        UID: "ABC-01",
-        Make: "CISCO",
-        "Model Number": "SG550X",
-        "Serial Number": "DNI214307CQ",
-        "Package Date": "12-01-2024",
-        "Unique ID": "SW001",
-      },
+  useEffect(() => {
+    resetAndFetch();
+  }, [search]);
 
-    },
-    {
-      title: "ALUVA PALACE",
-      data: {
-        UID: "ABC-01",
-        Make: "CISCO",
-        "Model Number": "SG550X",
-        "Serial Number": "DNI214307CQ",
-        "Package Date": "12-01-2024",
-        "Unique ID": "SW001",
-      },
+  const resetAndFetch = () => {
+    setSwitches([]);
+    setPage(1);
+    setHasMore(true);
+    fetchSwitches(1, search, true);
+  };
 
-    },
-    {
-      title: "KOCHINBANK",
-      data: {
-        UID: "ABC-01",
-        Make: "CISCO",
-        "Model Number": "SG550X",
-        "Serial Number": "DNI214307CQ",
-        "Package Date": "12-01-2024",
-        "Unique ID": "SW001",
-      },
+  const fetchSwitches = async (
+    pageNo = page,
+    searchText = search,
+    isReset = false
+  ) => {
+    if (loading || !hasMore) return;
 
-    },
-  ];
+    try {
+      setLoading(true);
+      const res = await getAllSwitches(pageNo, 10, searchText);
+
+      const mappedData = res.results.map((sw) => ({
+        title: sw.name, // card title
+        data: {
+          UID: sw.uid || "—",
+          Make: sw.make || "—",
+          "Model Number": sw.model_number || "—",
+          "Serial Number": sw.serial_number || "—",
+          "Package Date": sw.package_date || "—",
+          "Unique ID": sw.unique_id || "—",
+        },
+      }));
+
+      setSwitches((prev) =>
+        isReset ? mappedData : [...prev, ...mappedData]
+      );
+
+      setPage(pageNo + 1);
+
+      if (res.current_page >= res.total_pages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to fetch Switches", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-      <View style={styles.container}>
-        <CommonHeader title="Switches Details" />
-  
-        <FlatList
-          data={switchesData}
-          keyExtractor={(_, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.listContent}
-          renderItem={({ item, index }) => (
-            <UserCard
-              index={index}
-              title={item.title}
-              data={item.data}
-            />
-          )}
-        />
-      </View>
-    );
-  }
-  
+    <View style={styles.container}>
+      <CommonHeader
+        title="Switches Details"
+        onSearch={(text) => setSearch(text)}
+      />
+
+      <FlatList
+        data={switches}
+        keyExtractor={(_, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listContent}
+        renderItem={({ item, index }) => (
+          <UserCard index={index} title={item.title} data={item.data} />
+        )}
+        onEndReached={() => fetchSwitches()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loading ? <ActivityIndicator size="small" /> : null
+        }
+      />
+    </View>
+  );
+}

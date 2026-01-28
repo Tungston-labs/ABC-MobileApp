@@ -55,3 +55,31 @@ export const updateCustomer = async (customerId, data) => {
 };
 
 
+
+export const getAllCustomers = async (
+  search = "",
+  page = 1,
+  limit = 10
+) => {
+  let url = `/client/customer/?page=${page}&page_size=${limit}`;
+
+  if (search) {
+    url += `&search=${encodeURIComponent(search)}`;
+  }
+
+  const response = await api.get(url);
+  return response.data;
+};
+
+
+export const getExpiringCustomers = async (search, page, lco) => {
+  const params = {
+    search,
+    page,
+  };
+
+  if (lco) params.lco = lco;
+
+  const response = await api.get('/client/expiring-soon/', { params });
+  return response.data;
+};

@@ -1,96 +1,84 @@
-import React from "react";
-import { View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, FlatList, ActivityIndicator } from "react-native";
 import UserCard from "../../components/UserCards";
 import CommonHeader from "../../components/CommonHeader";
 import styles from "./style";
+import { getExpiringCustomers } from "../../services/customerService";
 
 export default function PlanExpiry() {
-  const planExpiryData = [
-    {
-      title: "Akshaykumar T S",
-      data: {
-        LCO: "Abdul Latheef KK",
-        "Phone number	": "7736135824",
-        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
-        "Last Updated": "12/4/2025, 2:36:01 PM",
-        "Plan expiry date": "2025-12-26",
-      },
-    },
-    {
-      title: "Suresh K C	",
-      data: {
-        LCO: "Abdul Latheef KK",
-        "Phone number	": "7736135824",
-        "Address": "Kunnasserypallam (Vaniyappilly),Aluva N/A N/A Ernakulam,Kunnathunad,ERNAKULAM,Kerala-683105",
-        "Last Updated": "12/4/2025, 2:36:01 PM",
-        "Plan expiry date": "2025-12-26",
-      },
+  const [expiring, setExpiring] = useState([]);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-    },
-    {
-     title: "Rajendran Nair",
-      data: {
-        LCO: "Abdul Latheef KK",
-        "Phone number	": "7736135824",
-        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
-        "Last Updated": "12/4/2025, 2:36:01 PM",
-        "Plan expiry date": "2025-12-26",
-      },
+  useEffect(() => {
+    fetchExpiring(search, 1, true); // initial load
+  }, []);
 
-    },
-    {
-      title: "Harishankaran P K",
-      data: {
-        LCO: "Abdul Latheef KK",
-        "Phone number	": "7736135824",
-        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
-        "Last Updated": "12/4/2025, 2:36:01 PM",
-        "Plan expiry date": "2025-12-26",
-      },
+  // Fetch customers, with optional reset (for new search)
+  const fetchExpiring = async (searchText = "", pageNum = 1, reset = false) => {
+    if (loading) return;
+    try {
+      setLoading(true);
+      const res = await getExpiringCustomers(searchText, pageNum);
+      
+      if (reset) {
+        setExpiring(res.results);
+      } else {
+        setExpiring(prev => [...prev, ...res.results]);
+      }
 
-    },
-    {
-      title: "Lekshmi Nair",
-      data: {
-        LCO: "Abdul Latheef KK",
-        "Phone number	": "7736135824",
-        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
-        "Last Updated": "12/4/2025, 2:36:01 PM",
-        "Plan expiry date": "2025-12-26",
-      },
+      setPage(res.current_page + 1);
+      setHasMore(res.current_page < res.total_pages);
+    } catch (err) {
+      console.log("Error fetching expiring customers", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    },
-    {
-      title: "Vishnu S",
-      data: {
-        LCO: "Abdul Latheef KK",
-        "Phone number	": "7736135824",
-        "Address": "Thoppil House Snpuram Thaikkattukkara Aluva,Aluva,Aluva,ERNAKULAM,Kerala-683106",
-        "Last Updated": "12/4/2025, 2:36:01 PM",
-        "Plan expiry date": "2025-12-26",
-      },
+  // Called when user types in search box
+  const handleSearch = (text) => {
+    setSearch(text);
+    setPage(1);
+    setHasMore(true);
+    fetchExpiring(text, 1, true); // reset list
+  };
 
-    },
-  ];
+  // Infinite scroll
+  const handleLoadMore = () => {
+    if (hasMore && !loading) {
+      fetchExpiring(search, page);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <CommonHeader title="Plan Expiry Details" />
+      <CommonHeader title="Plan Expiry Details" onSearch={handleSearch} />
 
       <FlatList
-        data={planExpiryData}
-        keyExtractor={(_, index) => index.toString()}
+        data={expiring}
+        keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
         renderItem={({ item, index }) => (
           <UserCard
             index={index}
-            title={item.title}
-            data={item.data}
+            title={item.full_name}
+            data={{
+              "LCO": item.lco_name,
+              "Phone": item.phone,
+              "Email": item.email,
+              "Last Updated": item.last_updated,
+              "Plan Expiry": item.expiry_date,
+            }}
           />
         )}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={loading ? <ActivityIndicator size="small" /> : null}
       />
     </View>
   );
 }
-

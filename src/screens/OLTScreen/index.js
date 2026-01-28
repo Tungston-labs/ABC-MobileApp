@@ -1,82 +1,89 @@
-import React from "react";
-import { View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, FlatList, ActivityIndicator } from "react-native";
 import UserCard from "../../components/UserCards";
 import CommonHeader from "../../components/CommonHeader";
 import styles from "./style";
+import { getAllOlts } from "../../services/oltServices";
 
 export default function OLTScreen() {
-  const oltData = [
-    {
-      title: "SVA/09",
-      data: {
-        UID: "OLT-001",
-        Make: "Huawei",
-        "Model Number": "MA5800-X17",
-        "Serial Number": "SN123456789",
-        "Package Date": "12-01-2024",
-        Switch: "Core Switch 1",
-        "Unique ID": "UNQ-OLT-1001",
-      },
-    },
-    {
-      title: "VLC/28",
-      data: {
-        UID: "OLT-001",
-        Make: "Huawei",
-        "Model Number": "MA5800-X17",
-        "Serial Number": "SN123456789",
-        "Package Date": "12-01-2024",
-        Switch: "Core Switch 1",
-        "Unique ID": "UNQ-OLT-1001",
-      },
+  const [olts, setOlts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [search, setSearch] = useState("");
 
-    },
-    {
-      title: "SCA/06/01",
-      data: {
-        UID: "OLT-001",
-        Make: "Huawei",
-        "Model Number": "MA5800-X17",
-        "Serial Number": "SN123456789",
-        "Package Date": "12-01-2024",
-        Switch: "Core Switch 1",
-        "Unique ID": "UNQ-OLT-1001",
-      },
+  useEffect(() => {
+    resetAndFetch();
+  }, [search]);
 
-    },
-    {
-     title: "ZPC/19",
-      data: {
-        UID: "OLT-001",
-        Make: "Huawei",
-        "Model Number": "MA5800-X17",
-        "Serial Number": "SN123456789",
-        "Package Date": "12-01-2024",
-        Switch: "Core Switch 1",
-        "Unique ID": "UNQ-OLT-1001",
-      },
+  const resetAndFetch = () => {
+    setOlts([]);
+    setPage(1);
+    setHasMore(true);
+    fetchOlts(1, search, true);
+  };
 
-    },
-  ];
+  const fetchOlts = async (
+    pageNo = page,
+    searchText = search,
+    isReset = false
+  ) => {
+    if (loading || !hasMore) return;
+
+    try {
+      setLoading(true);
+      const res = await getAllOlts(pageNo, 10, searchText);
+
+      const mappedData = res.results.map((olt) => ({
+        title: olt.name,
+        data: {
+          UID: olt.uid || "—",
+          Make: olt.make || "—",
+          "Model Number": olt.model_number || "—",
+          "Serial Number": olt.serial_number || "—",
+          "Package Date": olt.package_date || "—",
+          Switch: olt.switch_name || "—",
+          "Unique ID": olt.unique_id || "—",
+        },
+      }));
+
+      setOlts((prev) =>
+        isReset ? mappedData : [...prev, ...mappedData]
+      );
+
+      setPage(pageNo + 1);
+
+      if (res.current_page >= res.total_pages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to fetch OLTs", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <CommonHeader title="OLT Details" />
+      <CommonHeader
+        title="OLT Details"
+        onSearch={(text) => setSearch(text)}
+      />
 
       <FlatList
-        data={oltData}
+        data={olts}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
         renderItem={({ item, index }) => (
-          <UserCard
-            index={index}
-            title={item.title}
-            data={item.data}
-          />
+          <UserCard index={index} title={item.title} data={item.data} />
         )}
+        onEndReached={() => fetchOlts()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loading ? <ActivityIndicator size="small" /> : null
+        }
       />
     </View>
   );
 }
-

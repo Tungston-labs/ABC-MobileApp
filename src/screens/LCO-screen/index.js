@@ -1,82 +1,90 @@
-import React from "react";
-import { View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, FlatList, ActivityIndicator } from "react-native";
 import UserCard from "../../components/UserCards";
 import CommonHeader from "../../components/CommonHeader";
 import styles from "./style";
+import { getAllLcos } from "../../services/lcoService";
 
 export default function LCOScreen() {
-  const lcoData = [
-    {
-      title: "Santhosh KD",
-      data: {
-        Address	: "Womens Hostel Road UC college ALUVA",
-        "Networking Name ": "ACME CABLE TV	",
-        "Adhar number	": "801822849302",
-        "Phone Number": "9247574780",
-        "Email": "santhoshaluva@gmail.com",
-        OLT: "ACE/12, ACE/26	",
-        "Unique ID	": "LCO002",
-      },
-    },
-    {
-      title: "Reena Maria",
-      data: {
-        Address	: "Womens Hostel Road UC college ALUVA",
-        "Networking Name ": "ACME CABLE TV	",
-        "Adhar number	": "801822849302",
-        "Phone Number": "9247574780",
-        "Email": "santhoshaluva@gmail.com",
-        OLT: "ACE/12, ACE/26	",
-        "Unique ID	": "LCO002",
-      },
+  const [lcos, setLcos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [search, setSearch] = useState("");
 
-    },
-    {
-      title: "Ajith Kumar",
-      data: {
-        Address	: "Womens Hostel Road UC college ALUVA",
-        "Networking Name ": "ACME CABLE TV	",
-        "Adhar number	": "801822849302",
-        "Phone Number": "9247574780",
-        "Email": "santhoshaluva@gmail.com",
-        OLT: "ACE/12, ACE/26	",
-        "Unique ID	": "LCO002",
-      },
+  useEffect(() => {
+    // 🔁 whenever search changes → reload from page 1
+    resetAndFetch();
+  }, [search]);
 
-    },
-    {
-      title: "Krishnan Nair",
-      data: {
-        Address	: "Womens Hostel Road UC college ALUVA",
-        "Networking Name ": "ACME CABLE TV	",
-        "Adhar number	": "801822849302",
-        "Phone Number": "9247574780",
-        "Email": "santhoshaluva@gmail.com",
-        OLT: "ACE/12, ACE/26	",
-        "Unique ID	": "LCO002",
-      },
+  const resetAndFetch = () => {
+    setLcos([]);
+    setPage(1);
+    setHasMore(true);
+    fetchLcos(1, search, true);
+  };
 
-    },
-  ];
+  const fetchLcos = async (
+    pageNo = page,
+    searchText = search,
+    isReset = false
+  ) => {
+    if (!hasMore || loading) return;
+
+    try {
+      setLoading(true);
+      const res = await getAllLcos(pageNo, 10, searchText);
+
+      const mappedData = res.results.map((lco) => ({
+        title: lco.name,
+        data: {
+          Address: lco.address || "—",
+          "Networking Name": lco.networking_name || "—",
+          "Aadhaar Number": lco.aadhaar_number || "—",
+          "Phone Number": lco.phone || "—",
+          Email: lco.user_email || "—",
+          OLT: lco.olt_details?.map((o) => o.name).join(", ") || "—",
+          "Unique ID": lco.unique_id,
+        },
+      }));
+
+      setLcos((prev) =>
+        isReset ? mappedData : [...prev, ...mappedData]
+      );
+
+      setPage(pageNo + 1);
+
+      if (res.current_page >= res.total_pages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to fetch LCOs", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <CommonHeader title="LCO Details" />
+      <CommonHeader
+        title="LCO Details"
+        onSearch={(text) => setSearch(text)}
+      />
 
       <FlatList
-        data={lcoData}
+        data={lcos}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
         renderItem={({ item, index }) => (
-          <UserCard
-            index={index}
-            title={item.title}
-            data={item.data}
-          />
+          <UserCard index={index} title={item.title} data={item.data} />
         )}
+        onEndReached={() => fetchLcos()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loading ? <ActivityIndicator size="small" /> : null
+        }
       />
     </View>
   );
 }
-

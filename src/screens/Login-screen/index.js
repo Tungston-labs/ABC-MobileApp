@@ -26,28 +26,40 @@ export default function LoginScreen() {
   const navigation = useNavigation();
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert("Validation Error", "Please enter email and password");
-      return;
+  if (!email || !password) {
+    Alert.alert("Validation Error", "Please enter email and password");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const data = await loginUser(email, password, rememberMe);
+
+    const isSuperAdmin = data.user?.is_super_admin;
+
+    if (isSuperAdmin) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "DashboardScreen" }],
+      });
+    } else {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "HomeScreen" }],
+      });
     }
 
-    setLoading(true);
-    try {
-      
-      const data = await loginUser(email, password, rememberMe);
+  } catch (error) {
+    const message =
+      error.response?.data?.detail ||
+      error.message ||
+      "Something went wrong. Try again!";
+    Alert.alert("Login Failed", message);
+  } finally {
+    setLoading(false);
+  }
+};
 
-      // Alert.alert("Login Success", `Welcome, ${data.user?.name || "User"}!`);
-      navigation.navigate("DashboardScreen");
-    } catch (error) {
-      const message =
-        error.response?.data?.detail ||
-        error.message ||
-        "Something went wrong. Try again!";
-      Alert.alert("Login Failed", message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <KeyboardAvoidingView
