@@ -32,15 +32,15 @@ export default function CommonHeader({ title, onSearch }) {
                 style={{ marginRight: 12 }}
               />
             </TouchableOpacity>
-
+           
             <Text style={styles.headerTitle}>{title}</Text>
           </View>
-
+         
           <TouchableOpacity onPress={() => setMenuVisible(true)}>
             <Ionicons name="menu" size={26} color="#000" />
           </TouchableOpacity>
         </View>
-
+        
         <View style={styles.searchBox}>
           <Ionicons name="search" size={18} color="#83B1C9" />
           <TextInput
@@ -51,7 +51,7 @@ export default function CommonHeader({ title, onSearch }) {
           />
         </View>
       </View>
-
+      
       <HamburgerPanel
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}

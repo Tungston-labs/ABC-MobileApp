@@ -41,14 +41,6 @@ const UserHeader = ({
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
 
-          {/* HAMBURGER */}
-          <TouchableOpacity
-            style={styles.hamburger}
-            onPress={() => setMenuVisible(true)}
-          >
-            <Ionicons name="menu" size={26} color="#fff" />
-          </TouchableOpacity>
-
           {/* PROFILE CARD */}
           <View style={styles.profileCard}>
             <TouchableOpacity onPress={onEdit} style={styles.editIcon}>

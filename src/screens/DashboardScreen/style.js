@@ -16,7 +16,7 @@ export default StyleSheet.create({
 
   header: {
     backgroundColor: "#83B1C9",
-    paddingTop: 150,
+    paddingTop: 120,
     paddingBottom: 20,
     paddingHorizontal: 20,
     flexDirection: "row",

@@ -1,9 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// const BASE_URL = 'https://api.aluvabroadband.com/api';
-const BASE_URL = 'http://192.168.0.241:8000/api';
-
-
+const BASE_URL = 'https://api.aluvabroadband.com/api';
+// const BASE_URL = 'http://192.168.0.241:8000/api';
 
 
 const api = axios.create({
@@ -21,7 +19,6 @@ api.interceptors.request.use(async (config) => {
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
-
 
 // Handle 401s with token refresh
 api.interceptors.response.use(
