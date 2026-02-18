@@ -45,7 +45,6 @@ export default StyleSheet.create({
     marginTop: 18,
   },
 
-
   content: {
     flex: 1,
     padding: 20,
@@ -95,13 +94,16 @@ export default StyleSheet.create({
   boxText: {
     fontSize: 17,
     fontWeight: "800",
-    color: "#000",
+    color: "#0b0b0b",
+    position: "absolute",
+    bottom: 16,
+    left: 13,
   },
 
   arrowWrapper: {
     position: "absolute",
     bottom: 14,
-    right: 14,
+    right: 12,
     width: 26,
     height: 26,
     borderRadius: 13,

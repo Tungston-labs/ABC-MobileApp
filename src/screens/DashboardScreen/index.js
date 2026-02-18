@@ -66,8 +66,8 @@ function DashboardScreen() {
     { title: "OLT", count: counts.total_olts, icon: require("../../assets/OLT.png"), route: "OLTScreen" },
     { title: "SWITCH", count: counts.total_switches, icon: require("../../assets/Switches.png"), route: "SwitchesScreen" },
     { title: "ISP", count: counts.total_isps, icon: require("../../assets/ISP.png"), route: "ISPScreen" },
-    { title: "Customer", count: counts.total_customers, icon: require("../../assets/Customer.png"), route: "CustomerScreen" },
-    { title: "Plan Expiry", count: counts.expired_plan_customers, icon: require("../../assets/Planexpiry.png"), route: "PlanExpiry" },
+    { title: "CUSTOMER", count: counts.total_customers, icon: require("../../assets/Customer.png"), route: "CustomerScreen" },
+    { title: "PLAN EXPIRY", count: counts.expired_plan_customers, icon: require("../../assets/Planexpiry.png"), route: "PlanExpiry" },
   ];
 
   return (
