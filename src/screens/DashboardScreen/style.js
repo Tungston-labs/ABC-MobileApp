@@ -1,46 +1,50 @@
-import { StyleSheet, Dimensions } from "react-native";
+
+import { StyleSheet, Dimensions, Platform } from "react-native";
 
 const { width } = Dimensions.get("window");
-const BOX_SIZE = (width - 55) / 2;
+const BOX_SIZE = (width - 60) / 2;
 
 export default StyleSheet.create({
-  bgImage: {
-    flex: 1,
-  },
+  bgImage: { flex: 1 },
 
   container: {
     flex: 1,
-     backgroundColor: "rgb(231, 243, 250)",
-   
+    backgroundColor: "rgb(231,243,250)",
   },
+
 
   header: {
     backgroundColor: "#83B1C9",
-    paddingTop: 120,
-    paddingBottom: 20,
+    paddingTop: Platform.OS === "android" ? 50 : 70,
+    paddingBottom: 30,
     paddingHorizontal: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     borderBottomLeftRadius: 44,
     borderBottomRightRadius: 44,
   },
-  
+
+  headerTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
   logo: {
-    width: 60,
-    height: 50,
+    width: 55,
+    height: 45,
     resizeMode: "contain",
-    marginBottom: 16,
-    marginLeft: 15,
-    marginTop: -60,
+  },
+
+  menuBtn: {
+    padding: 6,
   },
 
   headerTitle: {
-    color: "#FFFFFF",
-    fontSize: 30,
-    marginLeft: 15,
-    fontFamily: "Lato_700Bold",
+    color: "#fff",
+    fontSize: 32,
+    fontWeight: "700",
+    marginTop: 18,
   },
+
 
   content: {
     flex: 1,
@@ -55,17 +59,11 @@ export default StyleSheet.create({
 
   box: {
     marginTop: 25,
-    width: BOX_SIZE,
-    height: BOX_SIZE,
     backgroundColor: "#eee",
     borderRadius: 28,
     alignItems: "center",
     paddingTop: 38,
     paddingBottom: 34,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
     elevation: 13,
   },
 
@@ -82,15 +80,10 @@ export default StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: "rgb(208, 233, 247)",
+    backgroundColor: "rgb(208,233,247)",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
-    elevation: 4,
   },
 
   icon: {
@@ -103,8 +96,6 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: "800",
     color: "#000",
-    textAlign: "center",
-    marginTop: 4,
   },
 
   arrowWrapper: {
@@ -117,10 +108,79 @@ export default StyleSheet.create({
     backgroundColor: "#83B1C9",
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
   },
+
+
+  drawerContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 30,
+    backgroundColor: "#fff",
+  },
+
+  drawerProfile: {
+    marginTop: 20,
+  },
+
+  drawerName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#303030",
+  },
+
+  drawerRole: {
+    fontSize: 18,
+    marginTop: 8,
+    color: "#303030",
+  },
+
+  drawerEmail: {
+    fontSize: 16,
+    color: "#777",
+    marginTop: 8,
+  },
+
+  logoutContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
+
+  logoutText: {
+    marginLeft: 8,
+    color: "red",
+    fontSize: 18,
+  },
+
+  footer: {
+    alignItems: "center",
+    marginBottom: 40,
+  },
+
+  footerLogo: {
+    width: 120,
+    height: 120,
+    resizeMode: "contain",
+  },
+
+  footerNote: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#aaa",
+    marginTop: 10,
+  },
+  menuItem: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginTop: 18,
+},
+
+menuText: {
+  marginLeft: 10,
+  fontSize: 17,
+  color: "#303030",
+},
+
 });

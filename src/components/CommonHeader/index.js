@@ -36,9 +36,6 @@ export default function CommonHeader({ title, onSearch }) {
             <Text style={styles.headerTitle}>{title}</Text>
           </View>
          
-          <TouchableOpacity onPress={() => setMenuVisible(true)}>
-            <Ionicons name="menu" size={26} color="#000" />
-          </TouchableOpacity>
         </View>
         
         <View style={styles.searchBox}>
@@ -52,10 +49,6 @@ export default function CommonHeader({ title, onSearch }) {
         </View>
       </View>
       
-      <HamburgerPanel
-        visible={menuVisible}
-        onClose={() => setMenuVisible(false)}
-      />
     </>
   );
 }

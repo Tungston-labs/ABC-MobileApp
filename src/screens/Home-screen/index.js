@@ -22,13 +22,13 @@ import { logoutUser } from '../../services/logoutService';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-const PAGE_SIZE = 20; 
+const PAGE_SIZE = 20;
 
 const HomeScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false); 
+  const [loadingMore, setLoadingMore] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -36,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     loadUserInfo();
-    fetchUsers(1); 
+    fetchUsers(1);
   }, []);
 
   const loadUserInfo = async () => {
@@ -250,31 +250,29 @@ const DrawerContent = ({ navigation }) => {
         <Text style={styles.drawerEmail}>
           {user?.username || user?.email || ''}
         </Text>
-         <TouchableOpacity onPress={confirmLogout} style={styles.logoutContainer}>
+        <TouchableOpacity onPress={confirmLogout} style={styles.logoutContainer}>
           <Ionicons name="log-out-outline" size={20} color="#f00" />
           <Text style={styles.logoutText}>Log out</Text>
         </TouchableOpacity>
       </View>
 
+      <View style={styles.footer}>
+        <View style={styles.imagefooter}>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={styles.imagedash}
+            resizeMode="contain"
+          />
+        </View>
 
-  <View style={styles.footer}>
-  <View style={styles.imagefooter}>
-    <Image
-      source={require('../../assets/logo.png')} 
-      style={styles.imagedash}
-      resizeMode="contain"
-    />
-  </View>
-
-  <Text style={styles.footerNote}>
-    Powered by Aluva Broadband Communications
-  </Text>
-</View>
+        <Text style={styles.footerNote}>
+          Powered by Aluva Broadband Communications
+        </Text>
+      </View>
 
     </View>
   );
 };
-
 
 const MainStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>

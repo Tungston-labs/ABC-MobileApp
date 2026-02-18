@@ -24,13 +24,14 @@
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "owner": "",
+    "owner": "ansalmazeez",
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-secure-store"
     ],
     "extra": {
       "eas": {
-        "projectId": "d0713a53-d972-4475-ac9f-2bf731d01ee6"
+        "projectId": "e7c9bfd8-701b-4a9d-a42f-dd55ed095b3c"
       }
     }
   }
