@@ -14,7 +14,7 @@ import { useNavigation, DrawerActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
+import LoginScreen from "../../screens/Login-screen"; 
 
 import styles from "./style";
 import { getDashboardCounts } from "../../services/dashboardService";
@@ -47,18 +47,6 @@ function DashboardScreen() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const confirmLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Yes', onPress: handleLogout },
-      ],
-      { cancelable: true }
-    );
   };
 
   const boxes = [
@@ -146,13 +134,23 @@ const DrawerContent = ({ navigation }) => {
     loadUser();
   }, []);
 
-  const handleLogout = async () => {
+const handleLogout = async () => {
+  try {
     await AsyncStorage.clear();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "LoginScreen" }],
-    });
-  };
+
+    navigation.closeDrawer();
+
+    setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
+    }, 150);
+
+  } catch (error) {
+    console.log("Logout error:", error);
+  }
+};
 
   const confirmLogout = () => {
     Alert.alert(
@@ -193,7 +191,7 @@ const DrawerContent = ({ navigation }) => {
 
         {/* EXISTING LOGOUT */}
         <TouchableOpacity
-          onPress={confirmLogout}
+          onPress={handleLogout}
           style={styles.logoutContainer}
         >
           <Ionicons name="log-out-outline" size={20} color="#f00" />
@@ -217,23 +215,19 @@ const DrawerContent = ({ navigation }) => {
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const DashboardStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Dashboard" component={DashboardScreen} />
-  </Stack.Navigator>
-);
+function MainDrawer() {
+  return (
+    <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      <Drawer.Screen name="Dashboard" component={DashboardScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function RootNavigator() {
   return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: false,
-        drawerType: "slide",
-        overlayColor: "rgba(0,0,0,0.3)",
-      }}
-      drawerContent={(props) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen name="DashboardStack" component={DashboardStack} />
-    </Drawer.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="MainDrawer" component={MainDrawer} />
+    </Stack.Navigator>
   );
 }

@@ -115,3 +115,68 @@
 //     </>
 //   );
 // }
+
+
+// components/HamburgerPanel.js
+import React from "react";
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const HamburgerPanel = ({ visible, onClose }) => {
+  const navigation = useNavigation();
+
+  const handleLogout = () => {
+    Alert.alert(
+      "Confirm Logout",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: async () => {
+            await AsyncStorage.removeItem("token");
+
+            // Close panel AFTER confirmation
+            onClose();
+
+            // Navigate after small delay (prevents Android activity error)
+            setTimeout(() => {
+navigation.reset({
+  index: 0,
+  routes: [{ name: "Login" }],
+});            }, 200);
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  return (
+    <Modal visible={visible} transparent animationType="slide">
+      <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)" }}>
+        <View style={{ backgroundColor: "#fff", padding: 20 }}>
+          
+          {/* LOGOUT BUTTON */}
+          <TouchableOpacity onPress={handleLogout}>
+            <Text style={{ fontSize: 16 }}>Logout</Text>
+          </TouchableOpacity>
+
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+export default HamburgerPanel;

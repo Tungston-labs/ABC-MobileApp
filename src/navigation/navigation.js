@@ -17,7 +17,7 @@ import CustomerScreen from '../screens/Customer-screen';
 import PlanExpiry from '../screens/PlanExpiry-screen';
 import LCOScreen from '../screens/LCO-screen';
 import TermsAndConditions from '../screens/Terms&Conditions';
-import PrivacyPolicy from '../screens/Privacy Policy ';
+import PrivacyPolicy from '../screens/Privacy Policy';
 
 const Stack = createNativeStackNavigator();
 

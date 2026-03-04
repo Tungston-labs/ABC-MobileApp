@@ -21,6 +21,7 @@
     "axios": "^1.11.0",
     "expo": "~53.0.17",
     "expo-font": "~13.3.2",
+    "expo-secure-store": "~14.2.4",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "0.79.5",
@@ -34,8 +35,7 @@
     "react-native-tab-view": "^4.2.2",
     "react-native-vector-icons": "^10.2.0",
     "react-redux": "^9.2.0",
-    "redux": "^5.0.1",
-    "expo-secure-store": "~14.2.4"
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
