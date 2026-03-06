@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./style";
-import HamburgerPanel from "../HamburgerPanel";
 
 export default function CommonHeader({ title, onSearch }) {
   const [menuVisible, setMenuVisible] = useState(false);

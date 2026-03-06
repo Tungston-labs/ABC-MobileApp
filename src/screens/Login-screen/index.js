@@ -17,6 +17,7 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/Ionicons";
 import { loginUser } from "../../services/loginService"; 
 
+
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,28 +26,23 @@ export default function LoginScreen() {
   const [rememberMe, setRememberMe] = useState(false); 
   const navigation = useNavigation();
 
-  const handleLogin = async () => {
+const handleLogin = async () => {
   if (!email || !password) {
     Alert.alert("Validation Error", "Please enter email and password");
     return;
   }
 
   setLoading(true);
+
   try {
-    const data = await loginUser(email, password, rememberMe);
+    const data = await loginUser(email, password);
 
     const isSuperAdmin = data.user?.is_super_admin;
 
     if (isSuperAdmin) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "DashboardScreen" }],
-      });
+      navigation.replace("MainDrawer");
     } else {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "HomeScreen" }],
-      });
+      navigation.replace("HomeScreen"); 
     }
 
   } catch (error) {
@@ -54,12 +50,12 @@ export default function LoginScreen() {
       error.response?.data?.detail ||
       error.message ||
       "Something went wrong. Try again!";
+
     Alert.alert("Login Failed", message);
   } finally {
     setLoading(false);
   }
 };
-
 
   return (
     <KeyboardAvoidingView

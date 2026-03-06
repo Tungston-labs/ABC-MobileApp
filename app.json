@@ -13,7 +13,7 @@
     "android": {
       "package": "com.anonymous.abcgroupapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.svg",
+        "foregroundImage": "./assets/splash-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,

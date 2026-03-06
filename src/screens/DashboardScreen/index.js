@@ -22,8 +22,8 @@ import { getDashboardCounts } from "../../services/dashboardService";
 const { width } = Dimensions.get("window");
 const BOX_SIZE = (width - 60) / 2;
 
-function DashboardScreen() {
-  const navigation = useNavigation();
+export default function DashboardScreen() { 
+   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [counts, setCounts] = useState({
     total_lcos: 0,
@@ -212,22 +212,4 @@ const handleLogout = async () => {
   );
 };
 
-const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
 
-function MainDrawer() {
-  return (
-    <Drawer.Navigator screenOptions={{ headerShown: false }}>
-      <Drawer.Screen name="Dashboard" component={DashboardScreen} />
-    </Drawer.Navigator>
-  );
-}
-
-export default function RootNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="MainDrawer" component={MainDrawer} />
-    </Stack.Navigator>
-  );
-}

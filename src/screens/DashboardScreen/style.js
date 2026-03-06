@@ -82,7 +82,7 @@ export default StyleSheet.create({
     backgroundColor: "rgb(208,233,247)",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 14,
   },
 
   icon: {
