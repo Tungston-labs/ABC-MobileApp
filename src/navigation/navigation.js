@@ -19,6 +19,7 @@ import PlanExpiry from "../screens/PlanExpiry-screen";
 import LCOScreen from "../screens/LCO-screen";
 import TermsAndConditions from "../screens/Terms&Conditions";
 import PrivacyPolicy from "../screens/Privacy Policy";
+import UserGeneral from "../screens/UserGeneral-screen";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function Navigation() {
         <Stack.Screen name="ISPScreen" component={ISPScreen} />
         <Stack.Screen name="SwitchesScreen" component={SwitchesScreen} />
         <Stack.Screen name="CustomerScreen" component={CustomerScreen} />
+        <Stack.Screen name="UserGeneral" component={UserGeneral} />
         <Stack.Screen name="PlanExpiry" component={PlanExpiry} />
         <Stack.Screen name="LCOScreen" component={LCOScreen} />
 

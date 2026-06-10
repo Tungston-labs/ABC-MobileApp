@@ -133,8 +133,13 @@ const HomeScreen = ({ navigation }) => {
               style={styles.userItem}
               onPress={() => navigation.navigate('UserTabs', { user: item })}
             >
-              <Text style={styles.userItemName}>{item.full_name || item.name}</Text>
-              <Text style={styles.userItemPhone}>Ph: {item.phone}</Text>
+              <Text style={styles.userItemName}>
+                {item.full_name || item.name || "---------"}
+              </Text>
+
+              <Text style={styles.userItemPhone}>
+                Ph: {item.phone || "-----"}
+              </Text>
             </TouchableOpacity>
           )}
           onEndReached={() => fetchUsers(page)}
@@ -177,7 +182,6 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Search */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={18} color="#888" style={styles.searchIcon} />
         <TextInput
@@ -195,8 +199,6 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
-
 
 const DrawerContent = ({ navigation }) => {
   const [lcoName, setLcoName] = useState('');

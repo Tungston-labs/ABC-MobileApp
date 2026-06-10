@@ -12,29 +12,32 @@ import ProfileHeader from '../../components/UserHeader';
 import { useCustomer } from '../../components/context/CustomerContext';
 import { updateCustomer } from '../../services/customerService';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-const UserProfileScreen = ({ navigation }) => {
-  const user = useCustomer();
+const UserGeneral = ({ navigation, route }) => {
+  const contextUser = useCustomer();
+  const user = route?.params?.user || contextUser;
   const [activeTab, setActiveTab] = useState('General');
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ ...user });
+  const [formData, setFormData] = useState(
+    route?.params?.user || { ...contextUser }
+  );
 
   const handleBack = () => {
-    navigation.navigate('HomeScreen');
+    navigation.goBack();
   };
 
   const handleEditToggle = async () => {
     if (isEditing) {
       try {
         const updatedUser = await updateCustomer(user.id, formData);
-        setFormData(updatedUser);  
-        setIsEditing(false);      
+        setFormData(updatedUser);
+        setIsEditing(false);
         Alert.alert('Success', 'Changes saved successfully.');
       } catch (error) {
         console.error('Error updating customer:', error.response?.data || error.message);
         Alert.alert('Error', 'Failed to save changes.');
       }
     } else {
-      setIsEditing(true); 
+      setIsEditing(true);
     }
   };
 
@@ -143,22 +146,22 @@ const UserProfileScreen = ({ navigation }) => {
         isEditing={isEditing}
       />
       <KeyboardAwareScrollView
-      contentContainerStyle={styles.formContainer}
-      showsVerticalScrollIndicator={false}
-      enableOnAndroid={true}
-      extraScrollHeight={20} 
-    >
-      
-      <ScrollView
-        style={styles.scrollArea}
-        contentContainerStyle={[styles.formContainer, { paddingTop: 350,paddingBottom:120 }]}
+        contentContainerStyle={styles.formContainer}
         showsVerticalScrollIndicator={false}
+        enableOnAndroid={true}
+        extraScrollHeight={20}
       >
-        {renderContent()}
-      </ScrollView>
+
+        <ScrollView
+          style={styles.scrollArea}
+          contentContainerStyle={[styles.formContainer, { paddingTop: 350, paddingBottom: 120 }]}
+          showsVerticalScrollIndicator={false}
+        >
+          {renderContent()}
+        </ScrollView>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
 
-export default UserProfileScreen;
+export default UserGeneral;
