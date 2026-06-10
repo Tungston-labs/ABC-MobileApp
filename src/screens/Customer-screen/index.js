@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
-import UserCard from "../../components/UserCards";
+import CustomerCard from "../../components/CustomerCard";
 import CommonHeader from "../../components/CommonHeader";
 import styles from "./style";
 import { getAllCustomers } from "../../services/customerService";
@@ -32,10 +32,13 @@ export default function CustomerScreen() {
 
     try {
       setLoading(true);
+
       const res = await getAllCustomers(searchText, pageNo, 10);
 
       const mappedData = res.results.map((cust) => ({
+        id: cust.id,
         title: cust.full_name || cust.username,
+        customer: cust,
         data: {
           "Phone Number": cust.phone || "—",
           Username: cust.username || "—",
@@ -47,9 +50,16 @@ export default function CustomerScreen() {
         },
       }));
 
-      setCustomers((prev) =>
-        isReset ? mappedData : [...prev, ...mappedData]
-      );
+      setCustomers((prev) => {
+        const merged = isReset
+          ? mappedData
+          : [...prev, ...mappedData];
+
+        return merged.filter(
+          (item, index, self) =>
+            index === self.findIndex((t) => t.id === item.id)
+        );
+      });
 
       setPage(pageNo + 1);
 
@@ -72,14 +82,13 @@ export default function CustomerScreen() {
 
       <FlatList
         data={customers}
-        keyExtractor={(_, index) => index.toString()}
+        keyExtractor={(item) => String(item.id)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
-        renderItem={({ item, index }) => (
-          <UserCard
-            index={index}
+        renderItem={({ item }) => (
+          <CustomerCard
             title={item.title}
-            data={item.data}
+            customer={item.customer}
           />
         )}
         onEndReached={() => fetchCustomers()}
