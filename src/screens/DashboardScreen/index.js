@@ -14,7 +14,7 @@ import { useNavigation, DrawerActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoginScreen from "../../screens/Login-screen"; 
+import LoginScreen from "../../screens/Login-screen";
 
 import styles from "./style";
 import { getDashboardCounts } from "../../services/dashboardService";
@@ -22,8 +22,8 @@ import { getDashboardCounts } from "../../services/dashboardService";
 const { width } = Dimensions.get("window");
 const BOX_SIZE = (width - 60) / 2;
 
-export default function DashboardScreen() { 
-   const navigation = useNavigation();
+export default function DashboardScreen() {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [counts, setCounts] = useState({
     total_lcos: 0,
@@ -134,23 +134,23 @@ const DrawerContent = ({ navigation }) => {
     loadUser();
   }, []);
 
-const handleLogout = async () => {
-  try {
-    await AsyncStorage.clear();
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.clear();
 
-    navigation.closeDrawer();
+      navigation.closeDrawer();
 
-    setTimeout(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      });
-    }, 150);
+      setTimeout(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }],
+        });
+      }, 150);
 
-  } catch (error) {
-    console.log("Logout error:", error);
-  }
-};
+    } catch (error) {
+      console.log("Logout error:", error);
+    }
+  };
 
   const confirmLogout = () => {
     Alert.alert(
