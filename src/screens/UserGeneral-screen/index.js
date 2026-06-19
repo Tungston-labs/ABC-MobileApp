@@ -33,7 +33,7 @@ const UserGeneral = ({ navigation, route }) => {
       if (!serialNumber) return;
 
       const response = await fetch(
-        `http://103.104.45.59:8000/signal/${serialNumber}`
+        `${SIGNAL_API}/signal/${serialNumber}`
       );
 
       if (!response.ok) return;
