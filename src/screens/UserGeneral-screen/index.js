@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,10 +20,48 @@ const UserGeneral = ({ navigation, route }) => {
   const [formData, setFormData] = useState(
     route?.params?.user || { ...contextUser }
   );
+  const SIGNAL_API = 'http://103.104.45.59:8000';
 
   const handleBack = () => {
     navigation.goBack();
   };
+
+  const fetchLiveSignal = async () => {
+    try {
+      const serialNumber = formData?.ont_number?.trim();
+
+      if (!serialNumber) return;
+
+      const response = await fetch(
+        `http://103.104.45.59:8000/signal/${serialNumber}`
+      );
+
+      if (!response.ok) return;
+
+      const signalData = await response.json();
+
+      setFormData(prev => ({
+        ...prev,
+        signal: signalData.rx_power?.toString() ?? '',
+        olt_name: signalData.olt_ip ?? '',
+        port: signalData.port ?? '',
+        last_updated: signalData.updated_at ?? '',
+      }));
+    } catch (error) {
+      console.log('Signal API Error:', error);
+    }
+  };
+  useEffect(() => {
+    if (!formData?.ont_number) return;
+
+    fetchLiveSignal();
+
+    const interval = setInterval(() => {
+      fetchLiveSignal();
+    }, 15000);
+
+    return () => clearInterval(interval);
+  }, [formData?.ont_number]);
 
   const handleEditToggle = async () => {
     if (isEditing) {
