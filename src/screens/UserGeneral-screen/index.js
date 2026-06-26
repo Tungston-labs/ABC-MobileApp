@@ -95,6 +95,7 @@ const UserGeneral = ({ navigation, route }) => {
               { label: 'Full Name', key: 'full_name' },
               { label: 'Phone number', key: 'phone' },
               { label: 'E-mail ID', key: 'email' },
+              { label: 'Username', key: 'username' },
               { label: 'LCO Ref', key: 'lco_ref' },
               { label: 'Last Updated', key: 'last_updated' },
             ].map((item, index) => (

@@ -19,8 +19,6 @@ export const searchCustomers = async (searchText = '', page = 1, pageSize = 20) 
 };
 
 
-
-
 export const updateCustomer = async (customerId, data) => {
   const formData = new FormData();
 
