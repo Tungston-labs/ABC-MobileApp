@@ -45,7 +45,9 @@ const UserGeneral = ({ navigation, route }) => {
         signal: signalData.rx_power?.toString() ?? '',
         olt_name: signalData.olt_ip ?? '',
         port: signalData.port ?? '',
-        last_updated: signalData.updated_at ?? '',
+        last_updated: signalData.updated_at
+          ? signalData.updated_at.split("T")[0]
+          : '',
       }));
     } catch (error) {
       console.log('Signal API Error:', error);
