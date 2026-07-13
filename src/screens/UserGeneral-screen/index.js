@@ -21,6 +21,7 @@ const UserGeneral = ({ navigation, route }) => {
     route?.params?.user || { ...contextUser }
   );
   const SIGNAL_API = 'http://103.104.45.59:8000';
+  const [liveLastUpdated, setLiveLastUpdated] = useState('');
 
   const handleBack = () => {
     navigation.goBack();
@@ -45,10 +46,13 @@ const UserGeneral = ({ navigation, route }) => {
         signal: signalData.rx_power?.toString() ?? '',
         olt_name: signalData.olt_ip ?? '',
         port: signalData.port ?? '',
-        last_updated: signalData.updated_at
-          ? signalData.updated_at.split("T")[0]
-          : '',
       }));
+
+      setLiveLastUpdated(
+        signalData.updated_at
+          ? new Date(signalData.updated_at).toLocaleString('en-IN')
+          : ''
+      );
     } catch (error) {
       console.log('Signal API Error:', error);
     }
@@ -104,7 +108,11 @@ const UserGeneral = ({ navigation, route }) => {
               <View key={index} style={styles.inputGroup}>
                 <Text style={styles.label}>{item.label}</Text>
                 <TextInput
-                  value={formData?.[item.key] || ''}
+                  value={
+                    item.key === 'last_updated'
+                      ? liveLastUpdated
+                      : formData?.[item.key] || ''
+                  }
                   editable={isEditing && item.key !== 'last_updated'}
                   style={styles.input}
                   onChangeText={(text) => handleChange(item.key, text)}
