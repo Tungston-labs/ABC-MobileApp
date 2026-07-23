@@ -4,7 +4,7 @@ import CustomerCard from "../../components/CustomerCard";
 import CommonHeader from "../../components/CommonHeader";
 import styles from "./style";
 import { getAllCustomers } from "../../services/customerService";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function CustomerScreen() {
   const [customers, setCustomers] = useState([]);
   const [page, setPage] = useState(1);
@@ -74,7 +74,7 @@ export default function CustomerScreen() {
   };
 
   return (
-    <View style={styles.container}>
+  <SafeAreaView style={styles.container} edges={["bottom"]}>
       <CommonHeader
         title="Customer Details"
         onSearch={(text) => setSearch(text)}
@@ -97,6 +97,6 @@ export default function CustomerScreen() {
           loading ? <ActivityIndicator size="small" /> : null
         }
       />
-    </View>
+    </SafeAreaView>
   );
 }

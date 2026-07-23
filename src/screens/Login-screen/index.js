@@ -37,12 +37,21 @@ const handleLogin = async () => {
   try {
     const data = await loginUser(email, password);
 
-    const isSuperAdmin = data.user?.is_super_admin;
+    const user = data.user;
 
-    if (isSuperAdmin) {
+    // Super Admin
+    if (user.is_super_admin) {
       navigation.replace("MainDrawer");
-    } else {
-      navigation.replace("HomeScreen"); 
+    }
+
+    // LCO
+    else if (user.lco_name) {
+      navigation.replace("LCODrawer");
+    }
+
+    // Other users
+    else {
+      navigation.replace("HomeScreen");
     }
 
   } catch (error) {
@@ -56,7 +65,6 @@ const handleLogin = async () => {
     setLoading(false);
   }
 };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

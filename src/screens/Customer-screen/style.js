@@ -1,9 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  safeArea: {
+  flex: 1,
+  backgroundColor: "#fff",
+},
   container: {
     flex: 1,
-    backgroundColor: "#F2F6FA",
+    backgroundColor: "#F4F7FA",
   },
 
   listContent: {

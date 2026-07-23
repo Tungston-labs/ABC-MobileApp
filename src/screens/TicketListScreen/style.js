@@ -1,0 +1,160 @@
+import { StyleSheet, Platform } from 'react-native';
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+   backgroundColor: "transparent", 
+  },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: Platform.OS === 'android' ? 20 : 8,
+    paddingBottom: 12,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#111',
+  },
+  headerSubtitle: {
+    fontSize: 13,
+    color: '#8A8A8A',
+    marginTop: 2,
+  },
+  headerTopRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
+},
+backButton: {
+  width: 34,
+  height: 34,
+  borderRadius: 17,
+  backgroundColor: '#83B1C9',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginRight: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.08,
+  shadowRadius: 3,
+  elevation: 1,
+ 
+},
+headerTextBlock: {
+  flex: 1,
+},
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    marginHorizontal: 20,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    height: 44,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 15,
+    color: '#333',
+  },
+  filtersRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  filterBox: {
+    flex: 1,
+    marginRight: 8,
+  },
+  filterLabel: {
+    fontSize: 12,
+    color: '#6E6E6E',
+    marginBottom: 4,
+  },
+  filterValueRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    height: 38,
+  },
+  filterValue: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  listContent: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 100,
+  },
+  cardShadowWrap: {
+    marginBottom: 14,
+    borderRadius: 14,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderLeftWidth: 5,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+  cardTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  ticketNo: {
+    fontSize: 13,
+    color: '#8A8A8A',
+    fontWeight: '500',
+  },
+  priority: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  cardBottomRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  ticketTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1A1A1A',
+    flexShrink: 1,
+    paddingRight: 8,
+  },
+  time: {
+    fontSize: 12,
+    color: '#9B9B9B',
+  },
+  fab: {
+    position: 'absolute',
+    right: 24,
+    bottom: 120,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#83B1C9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+});
+
+export default styles;

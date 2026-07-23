@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   ScrollView,
-  SafeAreaView,
   Alert,
 } from 'react-native';
 import styles from './styles';
@@ -12,6 +11,7 @@ import ProfileHeader from '../../components/UserHeader';
 import { useCustomer } from '../../components/context/CustomerContext';
 import { updateCustomer } from '../../services/customerService';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from "react-native-safe-area-context";
 const UserGeneral = ({ navigation, route }) => {
   const contextUser = useCustomer();
   const user = route?.params?.user || contextUser;
