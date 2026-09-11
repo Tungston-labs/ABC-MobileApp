@@ -61,12 +61,6 @@ const UserGeneral = ({ navigation, route }) => {
     if (!formData?.ont_number) return;
 
     fetchLiveSignal();
-
-    const interval = setInterval(() => {
-      fetchLiveSignal();
-    }, 15000);
-
-    return () => clearInterval(interval);
   }, [formData?.ont_number]);
 
   const handleEditToggle = async () => {
